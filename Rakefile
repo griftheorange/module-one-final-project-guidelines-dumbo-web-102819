@@ -12,3 +12,8 @@ desc 'Seeds database for testing'
 task :seed do
   MySeed.seed
 end
+
+desc 'Seeds monsters from Dnd5e API'
+task :monsterSeed do
+  MonsterSeed.seed
+end

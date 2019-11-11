@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_11_215821) do
+ActiveRecord::Schema.define(version: 2019_11_11_221916) do
 
   create_table "environment_monsters", force: :cascade do |t|
     t.string "name"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2019_11_11_215821) do
   create_table "monsters", force: :cascade do |t|
     t.string "name"
     t.string "url"
+    t.integer "challenge_rating"
   end
 
   create_table "stories", force: :cascade do |t|
