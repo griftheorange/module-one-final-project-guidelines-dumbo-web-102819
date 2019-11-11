@@ -4,6 +4,7 @@ class MySeed
         Story.destroy_all
         World.destroy_all
         Location.destroy_all
+        Monster.destroy_all
 
         u1 = User.create(username: 'Khobol')
         u2 = User.create(username: 'GG')
@@ -24,5 +25,13 @@ class MySeed
         l5 = Location.create(name: 'The Last Colony', world_id: w3.id)
         l6 = Location.create(name: 'The Second To Last Colony', world_id: w3.id)
         l7 = Location.create(name: 'This is Definitely The Last Colony, No Relation', world_id: w3.id)
+
+        
+        monsters = JSON.parse(RestClient.get("http://dnd5eapi.co/api/monsters"))["results"]
+        
+        monsters.each{|monster|
+            Monster.create(name: monster["name"], url: monster["url"])
+        }
+
     end
 end

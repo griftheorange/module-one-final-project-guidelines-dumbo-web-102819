@@ -10,11 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_11_193026) do
+ActiveRecord::Schema.define(version: 2019_11_11_215821) do
+
+  create_table "environment_monsters", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "environments", force: :cascade do |t|
+    t.string "name"
+  end
 
   create_table "locations", force: :cascade do |t|
     t.string "name"
     t.integer "world_id"
+  end
+
+  create_table "monsters", force: :cascade do |t|
+    t.string "name"
+    t.string "url"
   end
 
   create_table "stories", force: :cascade do |t|
