@@ -17,3 +17,4 @@ desc 'Seeds monsters from Dnd5e API'
 task :monsterSeed do
   MonsterSeed.seed
 end
+

@@ -9,6 +9,7 @@ require_relative '../app/models/story.rb'
 require_relative '../app/models/location.rb'
 require_relative '../app/models/world.rb'
 require_relative '../app/models/monster.rb'
+require_relative '../app/models/interface.rb'
 require_relative './monster_seed.rb'
 require_relative './seed.rb'
 
