@@ -4,6 +4,7 @@ class MySeed
         Story.destroy_all
         World.destroy_all
         Location.destroy_all
+        LocationMonster.destroy_all
 
         u1 = User.create(username: 'Khobol')
         u2 = User.create(username: 'GG')
@@ -30,6 +31,8 @@ class MySeed
         l1.add_random_monster_to_location
         l1.add_random_monster_to_location
 
+        LocationMonster.create(monster_id: l1.monsters.first.id, location_id: l4.id)
+        LocationMonster.create(monster_id: Monster.last.id, location_id: l4.id)
 
     end
 end

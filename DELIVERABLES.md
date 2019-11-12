@@ -65,3 +65,5 @@ Story menu
             3.Access monsters by name
             4.Access monster's details
             5.Add and delete monsters from that location
+            6.List monsters in this location
+            7.List other locations of given monster

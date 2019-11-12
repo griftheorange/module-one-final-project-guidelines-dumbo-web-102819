@@ -6,8 +6,4 @@ class Location < ActiveRecord::Base
     def add_random_monster_to_location
         LocationMonster.create(location_id: self.id, monster_id: Monster.all.sample.id)
     end
-
-    def all_monsters
-        self.monsters + (environment.monsters)
-    end
 end 

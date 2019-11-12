@@ -18,3 +18,8 @@ task :monsterSeed do
   MonsterSeed.seed
 end
 
+desc "run ruby code"
+task :run do
+  system "ruby ./bin/run.rb"
+end
+
