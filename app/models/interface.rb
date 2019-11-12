@@ -147,7 +147,6 @@ Level & XP:____________________________________          \/        \/        \/
          system "clear"
          puts "Welcome to the story creator!!!"
     end
-<<<<<<< HEAD
 
     def loc_men_test
         @user = User.first
@@ -332,9 +331,5 @@ Level & XP:____________________________________          \/        \/        \/
             end
         end
     end
-=======
-    
-    
 
->>>>>>> imadeosifo
 end
