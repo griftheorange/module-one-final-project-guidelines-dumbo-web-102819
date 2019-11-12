@@ -35,6 +35,7 @@ GEM
     rack (2.0.7)
     rack-protection (2.0.7)
       rack
+    rake (13.0.1)
     require_all (3.0.0)
     rest-client (2.1.0)
       http-accept (>= 1.7.0, < 2.0)
@@ -64,6 +65,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord (~> 5.2.3)
   pry
+  rake
   require_all
   rest-client
   sinatra-activerecord

@@ -30,6 +30,6 @@ class MySeed
         l1.add_random_monster_to_location
         l1.add_random_monster_to_location
 
-
+        
     end
 end
