@@ -149,18 +149,7 @@ Level & XP:____________________________________          \/        \/        \/
 
             #gets monsters by challenge rating
             when '4' || '4.'
-                puts "What challenge rating are you looking for? A wolf has a cr of 0.25, where a bear's would be 1"
-                input = gets.chomp.downcase
-               
-                if input == '0'
-                    puts Monster.by_cr(0).map{|monster| monster.name + ' ' + monster.challenge_rating.to_s}
-                elsif input.to_f == 0
-                    puts "That is not a valid number"
-                    next
-                else
-                    puts Monster.by_cr(input.to_f).map{|monster| monster.name + ' ' + monster.challenge_rating.to_s}
-                end
-
+                challenge_rating_search
 
             #gets monsters details
             when '5' || '5.'
@@ -190,7 +179,6 @@ Level & XP:____________________________________          \/        \/        \/
                 end
                 mons = Monster.name_is(input)
                 story_locations = @story.locations.map{|loc| loc.name}
-                binding.pry
                 locations = mons.locations.select{|location|
                     story_locations.include?(location.name)
                 }
@@ -244,6 +232,49 @@ Level & XP:____________________________________          \/        \/        \/
             when '12' || '12.'
                 @location = nil
                 story_menu
+            end
+        end
+    end
+
+    def challenge_rating_search
+        while true
+            puts <<-HEREDOC
+            What operation do you need?
+            =
+            >
+            < 
+            >=
+            <=
+            HEREDOC
+            input = gets.chomp
+            if !(input == '=' || input == '>' || input == '<' || input == '>=' || input == '<=')
+                puts "That is not a valid input"
+            else
+                while true
+                    puts 'Specify challenge rating.'
+                    cr = gets.chomp
+                    if cr == '0'
+                        cr = 0
+                    elsif cr.to_f == 0
+                        puts "That is not a valid number"
+                        next
+                    else
+                        case input
+                        when '='
+                            puts Monster.where('challenge_rating = ?', cr).order(:challenge_rating).map{|monster| monster.name + ' ' + monster.challenge_rating.to_s}
+                        when '>'
+                            puts Monster.where('challenge_rating > ?', cr).order(:challenge_rating).map{|monster| monster.name + ' ' + monster.challenge_rating.to_s}
+                        when '<'
+                            puts Monster.where('challenge_rating < ?', cr).order(:challenge_rating).map{|monster| monster.name + ' ' + monster.challenge_rating.to_s}
+                        when '>='
+                            puts Monster.where('challenge_rating >= ?', cr).order(:challenge_rating).map{|monster| monster.name + ' ' + monster.challenge_rating.to_s}
+                        when '<='
+                            puts Monster.where('challenge_rating <= ?', cr).order(:challenge_rating).map{|monster| monster.name + ' ' + monster.challenge_rating.to_s}
+                        end
+                        break
+                    end
+                end
+                break
             end
         end
     end
