@@ -10,16 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_12_142725) do
-
-  create_table "environment_monsters", force: :cascade do |t|
-    t.integer "environment_id"
-    t.integer "monster_id"
-  end
-
-  create_table "environments", force: :cascade do |t|
-    t.string "name"
-  end
+ActiveRecord::Schema.define(version: 2019_11_12_145354) do
 
   create_table "location_monsters", force: :cascade do |t|
     t.integer "location_id"
@@ -29,7 +20,6 @@ ActiveRecord::Schema.define(version: 2019_11_12_142725) do
   create_table "locations", force: :cascade do |t|
     t.string "name"
     t.integer "world_id"
-    t.integer "environment_id"
   end
 
   create_table "monsters", force: :cascade do |t|
