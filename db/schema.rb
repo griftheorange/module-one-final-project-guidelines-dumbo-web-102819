@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_12_014754) do
+ActiveRecord::Schema.define(version: 2019_11_12_142725) do
 
   create_table "environment_monsters", force: :cascade do |t|
     t.integer "environment_id"
@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(version: 2019_11_12_014754) do
     t.string "url"
     t.float "challenge_rating"
     t.string "monster_type"
+    t.string "sub_type"
+    t.string "alignment"
   end
 
   create_table "stories", force: :cascade do |t|
