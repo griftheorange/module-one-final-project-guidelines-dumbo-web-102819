@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_11_221916) do
+ActiveRecord::Schema.define(version: 2019_11_12_002308) do
 
   create_table "environment_monsters", force: :cascade do |t|
-    t.string "name"
+    t.integer "environment_id"
+    t.integer "monster_id"
   end
 
   create_table "environments", force: :cascade do |t|
@@ -23,12 +24,13 @@ ActiveRecord::Schema.define(version: 2019_11_11_221916) do
   create_table "locations", force: :cascade do |t|
     t.string "name"
     t.integer "world_id"
+    t.integer "environment_id"
   end
 
   create_table "monsters", force: :cascade do |t|
     t.string "name"
     t.string "url"
-    t.integer "challenge_rating"
+    t.float "challenge_rating"
   end
 
   create_table "stories", force: :cascade do |t|
