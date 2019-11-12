@@ -33,6 +33,5 @@ class MySeed
 
         LocationMonster.create(monster_id: l1.monsters.first.id, location_id: l4.id)
         LocationMonster.create(monster_id: Monster.last.id, location_id: l4.id)
-
     end
 end
