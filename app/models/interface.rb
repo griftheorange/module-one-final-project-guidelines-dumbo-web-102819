@@ -83,8 +83,22 @@ class Interface
     def main_menu
 
     end
+########################GGGGGGGGG#############################
+    def story_menu_test
+        @user = User.first
+        @story = Story.first
+        story_menu
+    end 
 
     def story_menu
-        
+        choices_for_users
     end 
+    private 
+    def choices_for_users
+        puts "Your story name '#{@story.story_name}'"
+        puts "Worlds in '#{@story.story_name}'" 
+        puts @story.worlds.map{|world| world.name}
+        puts "Which world do you want to conquer?"
+    end 
+  ###################GGGGGGG############################ 
 end

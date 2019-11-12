@@ -1,4 +1,4 @@
 require_relative '../config/environment'
 
 int = Interface.new
-int.login
+int.story_menu_test
