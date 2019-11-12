@@ -1,3 +1,4 @@
+
 class Interface
     def login
         system "clear"
@@ -85,21 +86,27 @@ class Interface
     end
 ########################GGGGGGGGG#############################
     def story_menu_test
-        @user = User.first
-        @story = Story.first
+        @user = User.second
+        @story = Story.third
         story_menu
     end 
 
     def story_menu
         choices_for_users
+        input = gets.chomp
+       
+        @world = World.find_by(name: input)
+        puts @world.locations.map{|location| location.name}
+        
     end 
     private 
     def choices_for_users
         puts "Your story name '#{@story.story_name}'"
         puts "Worlds in '#{@story.story_name}':" 
         puts @story.worlds.map{|world| world.name}
+  
         puts "Which world do you want to conquer?"
-        input = gets.chomp
+        
     end 
   ###################GGGGGGG############################ 
 end

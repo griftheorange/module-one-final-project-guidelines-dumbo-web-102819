@@ -41,7 +41,16 @@ class MySeed
         l5 = Location.create(name: 'The Last Colony', world_id: w3.id)
         l6 = Location.create(name: 'The Second To Last Colony', world_id: w3.id)
         l7 = Location.create(name: 'This is Definitely The Last Colony, No Relation', world_id: w3.id)
-
+        l8 = Location.create(name: "Waterdeep" , world_id:w6.id)
+        l9 = Location.create(name: "Neverwinter" , world_id:w6.id)
+        l10 = Location.create(name: "Sward Coast", world_id:w6.id)
+        l11 = Location.create(name: "Underchasm", world_id:w3.id)
+        l12 = Location.create(name: "Deadstone Cleft", world_id:w5.id)
+        l13 = Location.create(name: "Rainbow Gorge", world_id:w16.id)
+        l14 = Location.create(name: "Silverymoon", world_id:w2.id)
+        l15 = Location.create(name: "Menzoberranzan", world_id:w11.id)
+        l16 = Location.create(name: "Elturel", world_id:w10.id)
+        l17 = Location.create(name: "Luskan", world_id:w10.id)
 
         l1.add_random_monster_to_location
         l1.add_random_monster_to_location
