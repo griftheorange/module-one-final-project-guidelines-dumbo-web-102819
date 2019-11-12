@@ -5,4 +5,8 @@ class Location < ActiveRecord::Base
     has_many :monsters, through: :environment_monsters
     has_many :location_monsters
     has_many :monsters, through: :location_monsters
+
+    def add_random_monster_to_location
+        LocationMonster.create(location_id: self.id, monster_id: Monster.all.sample.id)
+    end
 end 

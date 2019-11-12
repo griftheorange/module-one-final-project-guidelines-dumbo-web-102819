@@ -36,6 +36,9 @@ class MySeed
         e2.add_random_monster_to_environment
         e2.add_random_monster_to_environment
 
+        l1.add_random_monster_to_location
+        l1.add_random_monster_to_location
+
 
     end
 end
