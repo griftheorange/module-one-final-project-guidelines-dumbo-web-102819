@@ -1,6 +1,8 @@
 class Location < ActiveRecord::Base 
     belongs_to :world
     belongs_to :environment
-    has_many :monster_locations
-    has_many :monsters, through: :monster_locations
+    has_many :environment_monsters, through: :environment
+    has_many :monsters, through: :environment_monsters
+    has_many :location_monsters
+    has_many :monsters, through: :location_monsters
 end 
