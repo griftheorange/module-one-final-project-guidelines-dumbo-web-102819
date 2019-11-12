@@ -96,9 +96,10 @@ class Interface
     private 
     def choices_for_users
         puts "Your story name '#{@story.story_name}'"
-        puts "Worlds in '#{@story.story_name}'" 
+        puts "Worlds in '#{@story.story_name}':" 
         puts @story.worlds.map{|world| world.name}
         puts "Which world do you want to conquer?"
+        input = gets.chomp
     end 
   ###################GGGGGGG############################ 
 end
