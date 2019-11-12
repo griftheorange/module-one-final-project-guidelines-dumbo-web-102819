@@ -54,7 +54,7 @@ class Interface
 
 
         HEREDOC
-        puts "OFF WE GO! The beginning of the adventure!"
+        puts "OFF WE GO! The beginning of your adventure!"
         puts "Type down your username please! (Q to quit)"
         input = gets.chomp
         if input == 'Q'
@@ -93,11 +93,11 @@ class Interface
 
     def story_menu
         choices_for_users
-        input = gets.chomp
-       
-        @world = World.find_by(name: input)
-        puts @world.locations.map{|location| location.name}
         
+        
+        list_of_locations_for_world
+        
+        input = gets.chomp
     end 
     private 
     def choices_for_users
@@ -106,7 +106,21 @@ class Interface
         puts @story.worlds.map{|world| world.name}
   
         puts "Which world do you want to conquer?"
-        
+    end 
+
+    def list_of_locations_for_world
+        input = gets.chomp
+        world_names = World.all.map{|world| world.name}
+
+        if world_names.include?(input)
+            @world = World.find_by(name: input)
+            puts @world.locations.map{|location| location.name}
+            puts "Choose a location to see their monsters!!"
+        else
+            choices_for_users
+            
+
+        end 
     end 
   ###################GGGGGGG############################ 
 end
