@@ -5,8 +5,6 @@ class Interface
 
     def login
         system "clear"
-        rasda = 'testnig'
-        puts "Testing: #{rasda}"
         puts <<-HEREDOC
         11111111111111111111111111111111111111001111111111111111111111111
         11111111111111111111111111111111111100011111111111111111111111111
