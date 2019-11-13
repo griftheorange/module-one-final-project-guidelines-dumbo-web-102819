@@ -246,14 +246,15 @@ end
         2. See all monster types
         3. Find monsters by type
         4. Find monsters by challenge rating
-        5. Get monster's details
-        6. List monsters at this location
-        7. List locations a monster shows up in in your story
-        8. Add a monster to this location
-        9. Remove a monster from this location
-        10. Select random monster from this location
-        11. Roll Dice d20
-        12. Back to story
+        5. Search monsters
+        6. Get monster's details
+        7. List monsters at this location
+        8. List locations a monster shows up in in your story
+        9. Add a monster to this location
+        10. Remove a monster from this location
+        11. Select random monster from this location
+        12. Roll Dice d20
+        13. Back to story
         HEREDOC
 
 
@@ -311,8 +312,12 @@ end
             when '4' || '4.'
                 challenge_rating_search
 
-            #gets monsters details
+            #searches monster by name
             when '5' || '5.'
+                search_by_name
+
+            #gets monsters details
+            when '6' || '6.'
                 puts "What monster would you like to see?"
                 input = gets.chomp.downcase
                 sleep(1)
@@ -326,7 +331,7 @@ end
 
 
             #list monsters at this location
-            when '6' || '6.'
+            when '7' || '7.'
                 puts ''
                 puts "At #{@location.name}:".green
                 puts_with_delay(@location.monsters.map{|monster| monster.name}, 0.2)
@@ -334,7 +339,7 @@ end
 
 
             #lists other locations you've put a monster in for this story
-            when '7' || '7.'
+            when '8' || '8.'
                 puts 'Which monster would you like to know the locations for?'
                 input = gets.chomp.downcase
                 sleep(1)
@@ -357,7 +362,7 @@ end
 
 
             #add a monster to this location, will not duplicate
-            when '8' || '8.'
+            when '9' || '9.'
                 puts 'What monster would you like to add here?'
                 input = gets.chomp.downcase
                 sleep(1)
@@ -377,7 +382,7 @@ end
 
 
             #removes a monster from this lacation
-            when '9' || '9.'
+            when '10' || '10.'
                 puts 'What monster would you like to remove?'
                 input = gets.chomp.downcase
                 sleep(1)
@@ -410,7 +415,7 @@ end
 
 
             #select random monster from this location
-            when '10' || '10.'
+            when '11' || '11.'
                 puts ''
                 mons = @location.monsters.sample
                 print mons.name.green
@@ -436,7 +441,7 @@ end
                 end
 
             #rolls dice
-            when '11' || '11.'
+            when '12' || '12.'
                 roll = (1..20).to_a.sample.to_s
                 puts "Rolled: " + "#{roll}"
                 if roll == '20'
@@ -448,7 +453,7 @@ end
                 sleep (1)
 
             #returns to story menu
-            when '12' || '12.'
+            when '13' || '13.'
                 @location = nil
                 story_menu
             end
@@ -552,6 +557,17 @@ end
                 break
             end
         end
+    end
+
+    def search_by_name
+        sleep(1)
+        puts ''
+        puts "What would you like to search by?"
+        input = gets.chomp.downcase
+        monsters = Monster.where('name LIKE ?', "%#{input}%")
+        puts ''
+        puts "The monsters matching #{input} are:".green
+        puts_with_delay(monsters, 0.5)
     end
 
     def puts_with_delay(string_array, sleep_t)
