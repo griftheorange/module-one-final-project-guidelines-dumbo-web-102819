@@ -8,3 +8,5 @@ gem "require_all"
 gem 'activerecord', "~> 5.2.3"
 gem 'rest-client'
 gem 'rake'
+gem 'launchy'
+gem 'colorize'

@@ -201,7 +201,8 @@ class Interface
                     puts "That is not a valid monster"
                     next
                 end
-                puts Monster.name_is(input).details
+                mons_hash = Monster.name_is(input).details
+                url_or_print_out_prompt(mons_hash)
 
 
             #list monsters at this location
@@ -275,6 +276,54 @@ class Interface
                 story_menu
             end
         end
+    end
+
+    def url_or_print_out_prompt(mons_hash)
+        while true
+            puts <<-HEREDOC
+            For #{mons_hash['name']}
+            Would you like their details:
+            1. Printed out
+            2. Online
+            HEREDOC
+            input = gets.chomp
+            case input
+            when '1' || '1.'
+                puts ''
+                puts ''
+                important = ['name', 'size', 'type', 'subtype','alignment', 'armor_class', 'hit_points', 'hit_dice', 'speed', 'strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma', 'perception', 'actions']
+                important.each{|topic|
+                        if topic != 'actions'
+                            puts (topic.capitalize + ': ' + mons_hash[topic].to_s)
+                        else
+                            put_actions(mons_hash)
+                        end
+                }
+                break
+            when '2' || '2.'
+                url = 'https://open5e.com/monsters/'
+                name = mons_hash['name'].gsub(',', '').gsub("'", '').gsub(' ', '-').downcase
+                url += name
+                Launchy.open(url)
+                break
+            else
+                'That is not a valid input.'
+            end
+        end
+        
+    end
+
+    def put_actions(mons_hash)
+        puts ''
+        puts "#{mons_hash['name']}'s Actions:".green
+        puts ''
+        actions = mons_hash['actions']
+        actions.each{|action|
+            puts "Name: #{action['name']}".green
+            puts action['desc']
+            puts ''
+            puts ''
+        }
     end
 
 
