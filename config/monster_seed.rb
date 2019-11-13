@@ -30,7 +30,7 @@ class MonsterSeed
 
     def self.add_monsters(monsters, new_url)
         monsters.each{|monster|
-            challenge_rating = monster['challenge_rating']
+            challenge_rating = monster['challenge_rating'].to_r
             type = monster['type']
             sub_type = monster['subtype']
             alignment = monster['alignment']
