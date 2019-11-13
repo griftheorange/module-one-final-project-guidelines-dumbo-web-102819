@@ -4,6 +4,7 @@ class Interface
 
 
     def login
+        @print_pause = 0.005
         system "clear"
         puts <<-HEREDOC
         11111111111111111111111111111111111111001111111111111111111111111
@@ -145,6 +146,7 @@ class Interface
 
     #have @user, @story, @location, Locations main menu for interaction
     def location_menu
+        @print_pause = 0.005
         world = @location.world
         location = @location
         system 'clear'
@@ -153,40 +155,72 @@ class Interface
             puts "World: #{world.name}"
             puts "Location: #{location.name}"
             puts <<-HEREDOC
-            What would you like to do?
-                1. See monster catalogue
-                2. See all monster types
-                3. Find monsters by type
-                4. Find monsters by challenge rating
-                5. Get monster's details
-                6. List monsters at this location
-                7. List locations a monster shows up in in your story
-                8. Add a monster to this location
-                9. Remove a monster from this location
-                10. Select random monster from this location
-                11. Roll Dice d20
-                12. Back to story
-            HEREDOC
+            
+    What would you like to do?
+        1. See monster catalogue
+        2. See all monster types
+        3. Find monsters by type
+        4. Find monsters by challenge rating
+        5. Get monster's details
+        6. List monsters at this location
+        7. List locations a monster shows up in in your story
+        8. Add a monster to this location
+        9. Remove a monster from this location
+        10. Select random monster from this location
+        11. Roll Dice d20
+        12. Back to story
+        HEREDOC
 
 
             input = gets.chomp
+            sleep(1)
             case input
             #see catalogue    
             when '1' || '1.'
-                puts Monster.all.map{|monster| monster.name}
+                Monster.all.each{|monster|
+                    sleep(@print_pause)
+                    puts monster.name
+                }
+                puts "That's an aweful lot of monsters, some people have way too much time on their hands.".green
+                puts "Try sifting through them with other options!".green
 
 
 
             #see all monster types
             when '2' || '2.'
-                puts Monster.get_all_types
+                sleep(1)
+                puts ''
+                puts ''
+                puts 'Monster Types:'.green
+                mons_type = Monster.get_all_types
+                mons_type.each{|type|
+                    sleep(@print_pause)
+                    puts type
+                }
+
 
 
             #find monsters by type
             when '3' || '3.'
                 puts "What type do you want to search?"
                 input = gets.chomp.downcase
-                puts Monster.by_type(input).map{|monster| monster.name}
+                sleep(1)
+                if !Monster.get_all_types.include?(input.capitalize)
+                    puts "That is not a valid monster type."
+                else
+                    puts ''
+                   mons = Monster.by_type(input).map{|monster| monster.name}
+                   mons.each{|monster| 
+                    sleep(@print_pause)
+                    puts monster
+                    }
+                    case input
+                    when 'fiends'
+                        puts "Turns out Plaresh is the only fiend, so why is it plural?".green
+                    when 'humanoids'
+                        puts "Ok sure Wizards. Maybe try looking at the other humanoid type?".green
+                    end
+                end
 
             #gets monsters by challenge rating
             when '4' || '4.'
@@ -196,6 +230,7 @@ class Interface
             when '5' || '5.'
                 puts "What monster would you like to see?"
                 input = gets.chomp.downcase
+                sleep(1)
                 #check input is a findable monster
                 if Monster.where("name LIKE ?", input).empty?
                     puts "That is not a valid monster"
@@ -207,16 +242,22 @@ class Interface
 
             #list monsters at this location
             when '6' || '6.'
-                puts @location.monsters.map{|monster| monster.name}
+                puts ''
+                puts "At #{@location.name}:".green
+                puts_with_delay(@location.monsters.map{|monster| monster.name}, 0.2)
+                sleep(1)
 
 
             #lists other locations you've put a monster in for this story
             when '7' || '7.'
-                puts 'Which monster?'
+                puts 'Which monster would you like to know the locations for?'
                 input = gets.chomp.downcase
+                sleep(1)
+                puts ''
                 #check input is a findable monster
                 if Monster.where("name LIKE ?", input).empty?
                     puts "That is not a valid monster"
+                    sleep(1)
                     next
                 end
                 mons = Monster.name_is(input)
@@ -224,14 +265,17 @@ class Interface
                 locations = mons.locations.select{|location|
                     story_locations.include?(location.name)
                 }
-                puts "This monster shows up in:"
-                puts locations.map{|location| location.name}
+                print "#{input.capitalize} ".green
+                puts 'is found in:'
+                puts_with_delay(locations.map{|location| location.name}, 0.2)
+                sleep(1)
 
 
             #add a monster to this location, will not duplicate
             when '8' || '8.'
                 puts 'What monster would you like to add here?'
                 input = gets.chomp.downcase
+                sleep(1)
                 #check input is a findable monster
                 if Monster.where("name LIKE ?", input).empty?
                     puts "That is not a valid monster"
@@ -241,19 +285,37 @@ class Interface
                 LocationMonster.find_or_create_by(location_id: @location.id, monster_id: mons.id)
                 # this is resetting the database search, so i dont get any bugs
                 @location = Location.find(@location.id)
+                print "#{input.capitalize} ".green
+                print "has been added to "
+                puts "#{@location.name}".green
+                sleep(1)
 
 
             #removes a monster from this lacation
             when '9' || '9.'
                 puts 'What monster would you like to remove?'
                 input = gets.chomp.downcase
+                sleep(1)
                 #check input is a findable monster
                 if Monster.where("name LIKE ?", input).empty?
+                    puts ''
                     puts "That is not a valid monster"
+                    sleep(1)
                     next
                 end
+                puts ''
                 mons = Monster.name_is(input)
-                LocationMonster.find_by(location_id: @location.id, monster_id: mons.id).destroy
+                joiner = LocationMonster.find_by(location_id: @location.id, monster_id: mons.id)
+                if joiner == nil
+                    print "#{input.capitalize} ".green
+                    puts "was not found at this location."
+                    sleep(1)
+                else
+                    joiner.destroy
+                    print "#{input.capitalize} ".green
+                    puts "was removed from this location."
+                    sleep(1)
+                end
                 #this is resetting the database search, so i dont get any bugs
                 @location = Location.find(@location.id)
 
@@ -264,11 +326,41 @@ class Interface
 
             #select random monster from this location
             when '10' || '10.'
-                puts @location.monsters.sample.name
+                puts ''
+                mons = @location.monsters.sample
+                print mons.name.green
+                puts " was selected."
+                puts ''
+                while true
+                    sleep(1)
+                    print 'Would you like '
+                    print "#{mons.name.green}'s "
+                    puts "details? (Y/N)"
+                    puts ''
+                    input = gets.chomp.downcase
+                    sleep(1)
+                    case input
+                    when 'y'
+                        url_or_print_out_prompt(mons.details)
+                        break
+                    when 'n'
+                        break
+                    else
+                        puts "That is not a valid input."
+                    end
+                end
 
             #rolls dice
             when '11' || '11.'
-                puts "Rolled: " + (1...20).to_a.sample.to_s
+                roll = (1..20).to_a.sample.to_s
+                puts "Rolled: " + "#{roll}"
+                if roll == '20'
+                    puts "CRITICAL SUCCESS!!!".green
+                elsif roll == '1'
+                    puts "CRITICAL FAILURE!!! YOU DIE!".red
+                end
+                puts ''
+                sleep (1)
 
             #returns to story menu
             when '12' || '12.'
@@ -287,17 +379,20 @@ class Interface
             2. Online
             HEREDOC
             input = gets.chomp
+            sleep(1)
             case input
             when '1' || '1.'
+                sleep(1)
                 puts ''
                 puts ''
-                important = ['name', 'size', 'type', 'subtype','alignment', 'armor_class', 'hit_points', 'hit_dice', 'speed', 'strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma', 'perception', 'actions']
+                important = ['name', 'size', 'challenge_rating', 'type', 'subtype','alignment', 'armor_class', 'hit_points', 'hit_dice', 'speed', 'strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma', 'perception', 'actions']
                 important.each{|topic|
                         if topic != 'actions'
                             puts (topic.capitalize + ': ' + mons_hash[topic].to_s)
                         else
                             put_actions(mons_hash)
                         end
+                        sleep(0.1)
                 }
                 break
             when '2' || '2.'
@@ -323,6 +418,7 @@ class Interface
             puts action['desc']
             puts ''
             puts ''
+            sleep(0.1)
         }
     end
 
@@ -338,12 +434,14 @@ class Interface
             <=
             HEREDOC
             input = gets.chomp
+            sleep(1)
             if !(input == '=' || input == '>' || input == '<' || input == '>=' || input == '<=')
                 puts "That is not a valid input"
             else
                 while true
-                    puts 'Specify challenge rating.'
+                    puts "Specify challenge rating. 1-30. A wolf has a cr of 1/4, where a bear's is 1."
                     cr = gets.chomp
+                    sleep(1)
                     if cr == '0'
                         cr = 0
                     elsif cr.to_f == 0
@@ -352,15 +450,15 @@ class Interface
                     else
                         case input
                         when '='
-                            puts Monster.where('challenge_rating = ?', cr).order(:challenge_rating).map{|monster| monster.name + ' ' + monster.challenge_rating.to_s}
+                            puts_with_delay(Monster.where('challenge_rating = ?', cr).order(:challenge_rating).map{|monster| monster.name + ' ' + monster.challenge_rating.to_s}, @print_pause)
                         when '>'
-                            puts Monster.where('challenge_rating > ?', cr).order(:challenge_rating).map{|monster| monster.name + ' ' + monster.challenge_rating.to_s}
+                            puts_with_delay(Monster.where('challenge_rating > ?', cr).order(:challenge_rating).map{|monster| monster.name + ' ' + monster.challenge_rating.to_s}, @print_pause)
                         when '<'
-                            puts Monster.where('challenge_rating < ?', cr).order(:challenge_rating).map{|monster| monster.name + ' ' + monster.challenge_rating.to_s}
+                            puts_with_delay(Monster.where('challenge_rating < ?', cr).order(:challenge_rating).map{|monster| monster.name + ' ' + monster.challenge_rating.to_s}, @print_pause)
                         when '>='
-                            puts Monster.where('challenge_rating >= ?', cr).order(:challenge_rating).map{|monster| monster.name + ' ' + monster.challenge_rating.to_s}
+                            puts_with_delay(Monster.where('challenge_rating >= ?', cr).order(:challenge_rating).map{|monster| monster.name + ' ' + monster.challenge_rating.to_s}, @print_pause)
                         when '<='
-                            puts Monster.where('challenge_rating <= ?', cr).order(:challenge_rating).map{|monster| monster.name + ' ' + monster.challenge_rating.to_s}
+                            puts_with_delay(Monster.where('challenge_rating <= ?', cr).order(:challenge_rating).map{|monster| monster.name + ' ' + monster.challenge_rating.to_s}, @print_pause)
                         end
                         break
                     end
@@ -368,6 +466,13 @@ class Interface
                 break
             end
         end
+    end
+
+    def puts_with_delay(string_array, sleep_t)
+        string_array.each{|string|
+        sleep(sleep_t)
+        puts string
+    }
     end
 
 #Location Menu ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
