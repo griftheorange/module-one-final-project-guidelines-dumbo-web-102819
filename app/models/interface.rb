@@ -326,42 +326,39 @@ class Interface
 ########################GGGGGGGGG############################################################################
 #Story Menu Below
 
-    def story_menu_test
-        @user = User.second
-        @story = Story.third
-        story_menu
-    end 
+    # def story_menu_test
+    #     @user = User.second
+    #     @story = Story.third
+    #     story_menu
+    # end 
 
     def story_menu
-        world_prompt
-        
-        
-        list_of_locations_for_world
+        first_prompt
         input = gets.chomp
-        world_prompt
-       
+        @world = World.find_by(name: input)
+        while (!@world)
+            puts "Invalid choice. Please enter again!"
+            input = gets.chomp
+            @world = World.find_by(name: input)
+        end
+        
+        puts "Locations in this world!"
+        puts @world.locations.map{|location| location.name} 
+
+        
+        puts "Choose a location!"
+        # location_menu  
     end 
     private 
-    def world_prompt
+    def first_prompt
+        puts "Welcome to your Story!"
         puts "Your story name '#{@story.story_name}'"
         puts "Worlds in '#{@story.story_name}':" 
         puts @story.worlds.map{|world| world.name}
-  
+        puts ""
         puts "Which world do you want to conquer?"
     end 
 
-    def list_of_locations_for_world
-        "Locations in this World!"
-        world_names = World.all.map{|world| world.name}
-        input = gets.chomp
-        case input 
-        when world_names.include?(input)
-            @world = World.find_by(name: input)
-            puts @world.locations.map{|location| location.name}
-            puts "Choose a location to see their monsters!!"
-        when !world_names.include?(input)
-             world_prompt
-        end 
-    end 
+       
   ###################GGGGGGG############################ 
 end
