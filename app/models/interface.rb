@@ -177,7 +177,8 @@ end
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu OPTION 5 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 def endscreen
-
+    @user = nil
+    login
 end 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -188,7 +189,7 @@ end
         print "\n\nPlease select one of the menu options ==> "
         input = gets.chomp.to_i
 
-        while input != 1 && input != 2 && input != 3 && input != 4 
+        while (input < 1 || input > 5)
             system "clear" 
             menu_options 
             print "Your value of { #{input} } was invalid. Please select again (1 - 4) ==> " 
