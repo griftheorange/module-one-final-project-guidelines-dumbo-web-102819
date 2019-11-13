@@ -55,8 +55,8 @@ class Interface
         11111111111111111110000000000000000000000000000000111111111111111
         HEREDOC
 
-        puts "OFF WE GO! The beginning of your adventure!"
-        puts "Type down your username please! (Q to quit)"
+        puts "Welcome to My First D&D!"
+        puts "Please give us your username! (Q to quit)"
         input = gets.chomp
 
         # puts "TESTING Inputs #{input}"
@@ -337,6 +337,8 @@ class Interface
         
         
         list_of_locations_for_world
+        input = gets.chomp
+        world_prompt
        
     end 
     private 
@@ -349,6 +351,7 @@ class Interface
     end 
 
     def list_of_locations_for_world
+        "Locations in this World!"
         world_names = World.all.map{|world| world.name}
         input = gets.chomp
         case input 
