@@ -103,7 +103,7 @@ class Interface
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu OPTIONSQ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 def menu_options
         system "clear"
-        puts "~~~Welcome #{@user} to the Main Menu~~~\n\n" 
+        puts "~~~ Welcome #{@user.username} to the Main Menu ~~~\n\n" 
         puts "{1} Continue from previous story "
         puts "{2} Create new story"
         puts "{3} Delete a story"
@@ -124,46 +124,92 @@ end
         
 def prev_story_screen
     system "clear"
-        puts "~~~Welcome to your story logs~~~"
-        puts "Which adventure would you like to pick up? ==> "
-        
-        
-        @user.stories.each do |story| 
-        puts story.story_name
+    count = 1
+
+        puts "~~~ Welcome back to your story logs!!! ~~~"  
+        my_stories = @user.stories.each do |story| 
+            puts "{#{count}} #{story.story_name}"
+            count += 1
         end
 
-        input = gets.chomp
-        @story = Story.find_by(story_name: input)
-        story_menu
-
+        while true
+            print "\n\nWhich adventure would you like to pick up? ==> "
+            input = gets.chomp.to_i
+            if input > count-1 || input < 1
+                puts "That is not a valid input"
+                sleep(1)
+            else
+                selected_story = my_stories[input-1]
+                @story = selected_story
+                story_menu
+            end
+        end
 end 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu OPTION 2 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-def story_menu_test
-
-end 
+def create_story
+    puts ''
+    puts 'What is the name of your new story?'
+    input = gets.chomp
+    s = Story.find_or_create_by(story_name: input, user_id: @user.id)
+    @user = User.find(@user.id)
+    puts ''
+    puts "You have created the story #{s.story_name}"
+    sleep(1)
+end
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu OPTION 3 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
     def delete_story 
-        # puts "Are you sure you want to delete"
         system "clear"
-        puts "Which story would you like to delete? \n"
+        count = 1
 
-             @user.stories.each do |my_story_instance|
-                 puts my_story_instance.story_name 
-             end
+        puts "~~~ Welcome to the Delete Story Menu ~~~"  
+        my_stories = @user.stories.each do |story| 
+            puts "{#{count}} #{story.story_name}"
+            count += 1
+        end
+        puts "{#{count}} Return to Main Menu" 
 
-        input2 = gets.chomp.to_i
+        while true
+            print "\n\n Which story will you nuke today? ==>  "
+            input1 = gets.chomp.to_i
+            main_menu if input1 == count 
+            puts "You have destroyed #{@user.stories[input1-1].story_name}"
+            @user.stories[input1-1].destroy
+            @user = User.find(@user.id)
+            sleep(1)
+            break
+        end
 
-            if input2 == 1
-                puts "thank yiu for your choice"
-            end    
+        # while !Story.find_by(story_name: selected_story)
+        #     puts "Please enter a number for a valid story ==> "
+
+        #     if Story.find_by(story_name: selected_story)
+        #         puts "Are you sure you want to destroy all these babies? (Y/N) => "
+        #              input2 = gets.chomp.upcase 
+
+        #         case input2 
+        #         when 'Y'
+                    
+        #             puts "Story #{story_no_more.story_name} has been deleted!"
+        #             puts "Press any key to return to continue...."
+        #             Story.all.delete(story_no_more)
+        #                   input3 = gets.chomp 
+        #                   if input3 
+        #                     delete_story 
+        #                   end 
+        #         when 'N'
+        #             delete_story
+        #         end 
+        #     end 
+        # end 
+
     end 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -200,7 +246,7 @@ end
         when 1
             prev_story_screen
         when 2 
-            story_menu_test
+            create_story
         when 3 
             delete_story
         when 4 
