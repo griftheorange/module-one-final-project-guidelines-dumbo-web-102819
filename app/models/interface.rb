@@ -568,6 +568,8 @@ end
 #Story Menu BELOW 
 ##############################################################################################################
 ##############################################################################################################
+
+
 def story_menu_test
     @user = User.second
     @story = Story.third
@@ -587,33 +589,57 @@ def story_menu
     input = gets.chomp
     case input
     when '1'
-    puts "List of the Worlds in #{input}" 
-    puts @story.worlds.map{|world| world.name}
-    puts ""
-    puts "Enter a world to see it's locations.(Enter the name of a world.)"
-       input = gets.chomp
-       @world = World.find_by(name: input)
-       while (!@world)
-        puts "Oops! Invalid choice. Please enter again!"
+        puts "List of the Worlds in #{input}" 
+        puts @story.worlds.map{|world| world.name}
+        puts ""
+        puts "Enter a world to see it's locations.(Enter the name of a world.)"
         input = gets.chomp
         @world = World.find_by(name: input)
+        while (!@world)
+            puts "Oops! Invalid choice. Please enter again!"
+            input = gets.chomp
+            @world = World.find_by(name: input)
         end ###while loop
-    puts ""
-    puts "Locations in #{input}:"
-    puts @world.locations.map{|location| location.name} 
-    puts ""
-    puts <<-HEREDOC
-    What's next?
-    1. Choose a location
-    2. Add a world
-    3. Delete a world
-    4. Return
-    HEREDOC
+        puts ""
+        puts "Locations in #{@world.name}:"
+        puts @world.locations.map{|location| location.name} 
+        puts ""
+        puts <<-HEREDOC
+        What's next?
+        1. Choose a location
+        2. Add a world
+        3. Delete a world
+        4. Return
+        HEREDOC
 
-    
-    
+        while true
+            input = gets.chomp
+            case input
+            when '1'
+                loc_input = gets.chomp
+                @location = @world.locations.find{|loc|
+                    loc.name == loc_input
+                }
+                if @location == nil
+                    puts "This location does not exist"
+                else
+                    location_menu
+                end
+                break
+            when '2'
+                break
+            when '3'
+                break
+            when '4'
+                break
+            else 
+                puts 'That is not a valid input'
+            end
+            end
     when '2'
-         menu_options
+        @story = nil
+        @world = nil
+         main_menu
     else
     puts "Oops! invalid option! Please choose between 1 to 2"
     input = gets.chomp
