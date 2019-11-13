@@ -263,10 +263,7 @@ end
             case input
             #see catalogue    
             when '1' || '1.'
-                Monster.all.each{|monster|
-                    sleep(@print_pause)
-                    puts monster.name
-                }
+                puts_with_delay(Monster.all.map{|monster| monster.name}, 0.005)
                 puts "That's an aweful lot of monsters, some people have way too much time on their hands.".green
                 puts "Try sifting through them with other options!".green
 
@@ -560,20 +557,66 @@ end
     end
 
     def search_by_name
-        sleep(1)
-        puts ''
-        puts "What would you like to search by?"
-        input = gets.chomp.downcase
-        monsters = Monster.where('name LIKE ?', "%#{input}%")
+        while true
+            sleep(1)
+            puts ''
+            puts "What would you like to search by?"
+            puts ''
+            puts <<-HEREDOC
+            1. Starts with
+            2. Includes
+            3. Ends with
+            HEREDOC
+            input1 = gets.chomp.downcase
+            puts ''
+            case input1
+            when '1' || '1.'
+                puts 'What is your search criteria?'
+                input = gets.chomp.downcase
+                monsters = Monster.where('name LIKE ?', "#{input}%").map{|monster| monster.name}.sort
+                break
+            when '2' || '2.'
+                puts 'What is your search criteria?'
+                input = gets.chomp.downcase
+                monsters = Monster.where('name LIKE ?', "%#{input}%").map{|monster| monster.name}.sort
+                break
+            when '3' || '3.'
+                puts 'What is your search criteria?'
+                input = gets.chomp.downcase
+                monsters = Monster.where('name LIKE ?', "%#{input}").map{|monster| monster.name}.sort
+                break
+            else 
+                puts "That is not a valid input."
+            end
+        end
         puts ''
         puts "The monsters matching #{input} are:".green
-        puts_with_delay(monsters, 0.5)
+        sleep(1)
+        puts_with_delay(monsters, 0.05)
+        sleep(1)
     end
 
-    def puts_with_delay(string_array, sleep_t)
+    def puts_with_delay(string_array, sleep_t, limit = nil)
+        count = 0.0
         string_array.each{|string|
         sleep(sleep_t)
         puts string
+        count += 1
+        if count == limit
+            while true
+                puts "Do you want to continue the list? (Y/N)"
+                input = gets.chomp.downcase
+                if input == 'y'
+                    count = 0
+                    break
+                elsif input == 'n'
+                    return
+                else
+                    puts 'That is not a valid input.'
+                end
+            end
+        end
+
     }
     end
 #Location Menu ABOVE^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
