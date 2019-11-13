@@ -568,59 +568,94 @@ end
 #Story Menu BELOW 
 ##############################################################################################################
 ##############################################################################################################
+def story_menu_test
+    @user = User.second
+    @story = Story.third
+    story_menu
+end 
 
+def story_menu
+    puts "Hi there! Welcome to '#{@story.story_name}'!"
+    puts "What do you want to do next? (Please enter the number.)"
+    puts <<-HEREDOC
+     1. See the list of Worlds in your story
+     2. Return to main-menu
+   
+     
+    HEREDOC
 
-    # def story_menu_test
-    #     @user = User.second
-    #     @story = Story.third
-    #     story_menu
-    # end 
-
-    def story_menu
-        first_prompt
+    input = gets.chomp
+    case input
+    when '1'
+    puts "List of the Worlds in #{input}" 
+    puts @story.worlds.map{|world| world.name}
+    puts ""
+    puts "Enter a world to see it's locations.(Enter the name of a world.)"
+       input = gets.chomp
+       @world = World.find_by(name: input)
+       while (!@world)
+        puts "Oops! Invalid choice. Please enter again!"
         input = gets.chomp
         @world = World.find_by(name: input)
-        while (!@world)
-            puts "Invalid choice. Please enter again!"
-            input = gets.chomp
-            @world = World.find_by(name: input)
-        end
+        end ###while loop
+    puts ""
+    puts "Locations in #{input}:"
+    puts @world.locations.map{|location| location.name} 
+    puts ""
+    puts <<-HEREDOC
+    What's next?
+    1. Choose a location
+    2. Add a world
+    3. Delete a world
+    4. Return
+    HEREDOC
+
+    
+    
+    when '2'
+         menu_options
+    else
+    puts "Oops! invalid option! Please choose between 1 to 2"
+    input = gets.chomp
+    end ## if else
+    
+end ###story_menu
+   
+
+
+# # def story_menu_test
+    # #     @user = User.second
+    # #     @story = Story.third
+    # #     story_menu
+    # # end 
+
+    # def story_menu
+    #     first_prompt
+    #     input = gets.chomp
+    #     @world = World.find_by(name: input)
+    #     while (!@world)
+    #         puts "Invalid choice. Please enter again!"
+    #         input = gets.chomp
+    #         @world = World.find_by(name: input)
+    #     end
         
-        puts "Locations in this world!"
-        puts @world.locations.map{|location| location.name} 
+    #     puts "Locations in this world!"
+    #     puts @world.locations.map{|location| location.name} 
 
         
-        puts "Choose a location!"
-        # location_menu  
-    end 
-    private 
-    def first_prompt
-        puts "Welcome to your Story!"
-        puts "Your story name '#{@story.story_name}'"
-        puts "Worlds in '#{@story.story_name}':" 
-        puts @story.worlds.map{|world| world.name}
-        puts ""
-        puts "Which world do you want to conquer?"
-    end 
+    #     puts "Choose a location!"
+    #     # location_menu  
+    # end 
+    # private 
+    # def first_prompt
+    #     puts "Welcome to your Story!"
+    #     puts "Your story name '#{@story.story_name}'"
+    #     puts "Worlds in '#{@story.story_name}':" 
+    #     puts @story.worlds.map{|world| world.name}
+    #     puts ""
+    #     puts "Which world do you want to conquer?"
+    # end 
 
-    def list_of_locations_for_world
-        input = gets.chomp
-        world_names = World.all.map{|world| world.name}
-
-        if world_names.include?(input)
-            @world = World.find_by(name: input)
-            puts @world.locations.map{|location| location.name}
-            puts "Choose a location to see their monsters!!"
-        else
-            choices_for_users
-            
-
-        end 
-    end 
- 
-#Story Menu ABOVE ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-##############################################################################################################
-##############################################################################################################
-
-
+       
+  ###################GGGGGGG############################ 
 end
