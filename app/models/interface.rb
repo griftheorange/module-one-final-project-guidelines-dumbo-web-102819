@@ -69,7 +69,6 @@ class Interface
         end
 
         user = User.where("username = ?", input)
-
         if !user.empty?
             @user = user[0]
             main_menu
@@ -101,11 +100,10 @@ class Interface
 ##############################################################################################################
 ##############################################################################################################
 
-   
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu OPTIONSQ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 def menu_options
         system "clear"
-        puts "~~~Welcome to the Main Menu~~~\n\n" 
+        puts "~~~Welcome #{@user} to the Main Menu~~~\n\n" 
         puts "{1} Continue from previous story "
         puts "{2} Create new story"
         puts "{3} Delete a story"
@@ -116,11 +114,28 @@ end
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu OPTION 1 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
+# u1 = User.create(username: 'Khobol')
+       
+# s1 = Story.create(story_name: 'The Great Debacle', user_id: u1.id)
+        
+# w1 = World.create(name: "Azeroth", story_id: s1.id)
+        
+# l1 = Location.create(name: 'Orgrimmar', world_id: w1.id)
+        
 def prev_story_screen
     system "clear"
-        puts "~~~Welcome to the Main Menu~~~\n\n"
-        print  ""
+        puts "~~~Welcome to your story logs~~~"
+        puts "Which adventure would you like to pick up? ==> "
+        
+        
+        @user.stories.each do |story| 
+        puts story.story_name
+        end
+
+        input = gets.chomp
+        @story = Story.find_by(story_name: input)
+        story_menu
+
 end 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
@@ -587,7 +602,6 @@ end
         puts "Which world do you want to conquer?"
     end 
 
-<<<<<<< HEAD
     def list_of_locations_for_world
         input = gets.chomp
         world_names = World.all.map{|world| world.name}
