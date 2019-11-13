@@ -98,7 +98,7 @@ class Interface
 
 
     def delete_story 
-        # puts "Are you sure you want to delet"
+        # puts "Are you sure you want to delete"
         system "clear"
         puts "Which story would you like to delete? \n"
         @user.stories.each do |my_story_instance|
@@ -335,15 +335,14 @@ class Interface
     end 
 
     def story_menu
-        choices_for_users
+        world_prompt
         
         
         list_of_locations_for_world
-        
-        input = gets.chomp
+       
     end 
     private 
-    def choices_for_users
+    def world_prompt
         puts "Your story name '#{@story.story_name}'"
         puts "Worlds in '#{@story.story_name}':" 
         puts @story.worlds.map{|world| world.name}
@@ -352,17 +351,15 @@ class Interface
     end 
 
     def list_of_locations_for_world
-        input = gets.chomp
         world_names = World.all.map{|world| world.name}
-
-        if world_names.include?(input)
+        input = gets.chomp
+        case input 
+        when world_names.include?(input)
             @world = World.find_by(name: input)
             puts @world.locations.map{|location| location.name}
             puts "Choose a location to see their monsters!!"
-        else
-            choices_for_users
-            
-
+        when !world_names.include?(input)
+             world_prompt
         end 
     end 
   ###################GGGGGGG############################ 
