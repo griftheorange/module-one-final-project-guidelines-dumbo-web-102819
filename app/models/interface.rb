@@ -570,26 +570,24 @@ end
 ##############################################################################################################
 
 
-def story_menu_test
-    @user = User.second
-    @story = Story.third
-    story_menu
-end 
 
 def story_menu
+   while true
     puts "Hi there! Welcome to '#{@story.story_name}'!"
     puts "What do you want to do next? (Please enter the number.)"
     puts <<-HEREDOC
      1. See the list of Worlds in your story
-     2. Return to main-menu
-   
+     2. Add a world
+     3. Delete a world
+     4. Return to main-menu
+     
      
     HEREDOC
 
     input = gets.chomp
     case input
     when '1'
-        puts "List of the Worlds in #{input}" 
+        puts "List of the Worlds in #{@story.story_name}" 
         puts @story.worlds.map{|world| world.name}
         puts ""
         puts "Enter a world to see it's locations.(Enter the name of a world.)"
@@ -604,84 +602,89 @@ def story_menu
         puts "Locations in #{@world.name}:"
         puts @world.locations.map{|location| location.name} 
         puts ""
-        puts <<-HEREDOC
-        What's next?
-        1. Choose a location
-        2. Add a world
-        3. Delete a world
-        4. Return
-        HEREDOC
-
-        while true
-            input = gets.chomp
-            case input
-            when '1'
-                loc_input = gets.chomp
-                @location = @world.locations.find{|loc|
-                    loc.name == loc_input
-                }
-                if @location == nil
-                    puts "This location does not exist"
-                else
-                    location_menu
-                end
-                break
-            when '2'
-                break
-            when '3'
-                break
-            when '4'
-                break
-            else 
-                puts 'That is not a valid input'
-            end
-            end
+        
+        puts "Which location details do you want to see?"
+            loc_input = gets.chomp
+            @location = loc_input
+            @location.world_id = @world.id
+        sleep(1)
+        location_menu
+    ###########add world
     when '2'
-        @story = nil
-        @world = nil
-         main_menu
-    else
-    puts "Oops! invalid option! Please choose between 1 to 2"
-    input = gets.chomp
-    end ## if else
+        puts "Which world do you want to add?"
+        world_input = gets.chomp
+        world = World.find_or_create_by(name: world_input, story_id: @story.id)
+        @story = Story.find(@story.id)
+        puts"Now you have #{world.name} in this world!"
+        sleep(1)
+        story_menu
+        #    if Wol
+        #     puts "#{world_input} is already created! Please create more!"
+           
+        #    else 
+        #    w = World.create(name: world_input, story_id: @story.id)
+        #    @story = Story.find(@story.id)
+           
+        #     end
+        #     puts"Now you have #{w.name} in this world!" 
     
+    #################### delete world
+     when '3'
+        puts "Which world do you want to delete?"
+        world_delete_input = gets.chomp
+        if World.where("name = ?", world_delete_input).empty?
+            puts "Invalid entry! Please choose another one!"
+        else 
+        w = World.find_by(name: world_delete_input)
+        w.delete
+        puts "Now #{world_delete_input} is destroyed!"
+        sleep(1)
+        story_menu
+        end 
+    
+#################return to main menu
+    when '4'
+        @story=nil
+        @world=nil
+         main_menu
+    else                                                                                               #     while true
+        puts "OOPS! Invalid input! Please enter from 1 ~ 4!"
+       
+        sleep(1)
+        story_menu
+    end                                                                                             #         input = gets.chomp
+                                                                                                    #         case input
+    end #while true                                                                                                 #         when '1'
+                                                                                                    #             loc_input = gets.chomp
+                                                                                                    #             @location = @world.locations.find{|loc|
+                                                                                                    #                 loc.name == loc_input
+                                                                                                    #             }
+                                                                                                    #             if @location == nil
+                                                                                                    #                 puts "This location does not exist"
+                                                                                                    #             else
+                                                                                                    #                 location_menu
+                                                                                                    #             end
+                                                                                                    #             break
+                                                                                                    #         when '2'
+                                                                                                    #             break
+                                                                                                    #         when '3'
+                                                                                                    #             break
+                                                                                                    #         when '4'
+                                                                                                    #             break
+                                                                                                                                                                                            #         else 
+                                                                                                    #             puts 'That is not a valid input'
+                                                                                                    #         end
+                                                                                                    #         end
+                                                                                                    # when '2'
+                                                                                                    #     @story = nil
+                                                                                                    #     @world = nil
+                                                                                                    #      main_menu
+                                                                                                    # else
+                                                                                                    # puts "Oops! invalid option! Please choose between 1 to 2"
+                                                                                                    # input = gets.chomp
+                                                                                                    # end ## if else
+       
 end ###story_menu
    
-
-
-# # def story_menu_test
-    # #     @user = User.second
-    # #     @story = Story.third
-    # #     story_menu
-    # # end 
-
-    # def story_menu
-    #     first_prompt
-    #     input = gets.chomp
-    #     @world = World.find_by(name: input)
-    #     while (!@world)
-    #         puts "Invalid choice. Please enter again!"
-    #         input = gets.chomp
-    #         @world = World.find_by(name: input)
-    #     end
-        
-    #     puts "Locations in this world!"
-    #     puts @world.locations.map{|location| location.name} 
-
-        
-    #     puts "Choose a location!"
-    #     # location_menu  
-    # end 
-    # private 
-    # def first_prompt
-    #     puts "Welcome to your Story!"
-    #     puts "Your story name '#{@story.story_name}'"
-    #     puts "Worlds in '#{@story.story_name}':" 
-    #     puts @story.worlds.map{|world| world.name}
-    #     puts ""
-    #     puts "Which world do you want to conquer?"
-    # end 
-
-       
   ###################GGGGGGG############################ 
 end
