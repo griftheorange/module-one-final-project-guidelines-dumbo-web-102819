@@ -372,8 +372,9 @@ class Interface
 
     def url_or_print_out_prompt(mons_hash)
         while true
+            name = mons_hash['name'].green
             puts <<-HEREDOC
-            For #{mons_hash['name']}
+            For #{name}
             Would you like their details:
             1. Printed out
             2. Online
