@@ -7,7 +7,9 @@ class Monster < ActiveRecord::Base
     end
 
     def details
-        JSON.parse(RestClient.get(self.url))
+        JSON.parse(RestClient.get(self.url))['results'].find{|monster|
+            monster['name'] == self.name
+        }
     end
 
     def self.monsters_less_than_or_equal_to_challenge_rating(cr)

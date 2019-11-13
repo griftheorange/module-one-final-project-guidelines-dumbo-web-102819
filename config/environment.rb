@@ -3,6 +3,8 @@ Bundler.require
 
 require 'require_all'
 require 'rest_client'
+require 'launchy'
+require 'colorize'
 require_relative '../app/models/location_monster.rb'
 require_relative '../app/models/user.rb'
 require_relative '../app/models/story.rb'
