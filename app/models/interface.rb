@@ -61,22 +61,24 @@ class Interface
         11111111111111111110000000000000000000000000000000111111111111111
         HEREDOC
 
-        puts "Welcome to My First D&D!"
-        puts "Please give us your username! (Q to quit)"
-        input = gets.chomp
-
-        # puts "TESTING Inputs #{input}"
-        if input.upcase == 'Q'
-            system 'killall afplay'
-            abort
-        end
-
-        user = User.where("username = ?", input)
-        if !user.empty?
-            @user = user[0]
-            main_menu
-        else
-            new_user_prompt(input)
+        while true
+            puts "Welcome to My First D&D!"
+            puts "Please give us your username! (Q to quit)"
+            input = gets.chomp
+    
+            # puts "TESTING Inputs #{input}"
+            if input.upcase == 'Q'
+                system 'killall afplay'
+                abort
+            end
+    
+            user = User.where("username = ?", input)
+            if !user.empty?
+                @user = user[0]
+                main_menu
+            else
+                new_user_prompt(input)
+            end
         end
     end
 
@@ -89,7 +91,7 @@ class Interface
             @user = User.create(username: name)
             main_menu
         when 'N'
-            login
+            return
         end
     end
 
