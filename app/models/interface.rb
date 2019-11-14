@@ -692,31 +692,43 @@ def story_menu
             input = gets.chomp
             case input
             when '1'
+                while true
                 puts "List of the Worlds in #{@story.story_name}" 
                 puts @story.worlds.map{|world| world.name}
                 puts ""
                 puts "Enter the name of a world to see details or press 'R' to previous page."
            
-            input = gets.chomp
-          
-            @world = World.find_by(name: input)
-            while (!@world)
-                puts "Oops! Invalid choice. Please enter again!"
-                input = gets.chomp
-                @world = World.find_by(name: input)
-            end ###while loop
-            puts ""
-            puts "Locations in #{@world.name}:"
-            puts @world.locations.map{|location| location.name} 
-            puts ""
+                     world_input = gets.chomp
+                     if World.find_by(name: world_input)
+            
+                        @world = World.find_by(name: world_input)
+                        while (!@world)
+                            puts "Oops! Invalid choice. Please enter again!"
+                            input = gets.chomp
+                            @world = World.find_by(name: world_input)
+                        end ###while loop
+                        puts ""
+                        puts "Locations in #{@world.name}:"
+                        puts @world.locations.map{|location| location.name} 
+                        puts ""
 
-            puts "Which location details do you want to see?"
-                    loc_input = gets.chomp
+                        puts "Which location details do you want to see?"
+                        loc_input = gets.chomp
+
+                        @location = Location.find_by(name: loc_input)
                 
-                @location = Location.find_by(name: loc_input)
-                
-            sleep(1)
-            location_menu
+                    sleep(1)
+                    location_menu
+                    # elsif world_input = 'R'
+                    #      story_menu
+                    else 
+                         puts "Oops! Invalid choice. Please enter again!"
+                         input = gets.chomp
+                    end ####if else
+                end ##while rb 695
+                    
+            
+           
             
             
     ###########add world
@@ -752,11 +764,12 @@ def story_menu
             
                 sleep(1)
                 story_menu
-            end                                                                                             
+            end  ###case input first line                                                                                           
                                                                                                    
-            end #while true                                                                       
+    end #while true                                                                       
        
 end ###story_menu
+
    
   ###################GGGGGGG############################ 
 end
