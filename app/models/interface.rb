@@ -938,7 +938,7 @@ def story_menu
                                     end 
                             when '4'
                                 story_menu
-                            else 
+                            else  
                                 puts "Oops! Invalid choice! Please enter again!".red
                                 puts ""
                                 sleep(1)
