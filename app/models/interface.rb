@@ -8,6 +8,7 @@ class Interface
 
     def login
         @print_pause = 0.005
+        system "afplay config/music/Tavern.mp3 &"
         music_menu
         system "clear"
         pic =  <<-HEREDOC
@@ -428,7 +429,8 @@ end
     #have @user, @story, @location, Locations main menu for interaction
     def location_menu
         @print_pause = 0.005
-        @world = @location.world
+        @world = World.find(@location.world_id)
+        binding.pry
         system 'clear'
         while true
             puts ''
@@ -651,6 +653,7 @@ end
             #returns to story menu
             when '13' || '13.'
                 @location = nil
+                @world = nil
                 story_menu
 
             when '14' || '14.'
@@ -910,7 +913,7 @@ def story_menu
                             loc_input = gets.chomp
                          
                             if  Location.all.map{|location| location.name}.include?(loc_input)
-                                @location = Location.find_by(name: loc_input)
+                                @location = @world.locations.find_by(name: loc_input)
                                 sleep(1)
                                 location_menu
                             elsif loc_input == 'R'
