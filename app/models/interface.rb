@@ -267,17 +267,19 @@ def  tutorial
             input = gets.chomp.downcase
 
             mons = Monster.where("name LIKE ?", input)[0]
-            binding.pry
             if mons == nil 
                 puts "That is not a valid monster. "
             else  
                 LocationMonster.create(location_id: t_location.id, monster_id: mons.id)
                 puts "You have added " +"#{mons.name}".green + " to #{t_location.name}."
                 sleep(1)
-                puts "You're set to go!!!"
+                puts "Within the app you can  search the full extent of our database including filtering and selecting details of specific monsters !!!"
+                puts ", but for now we have set up a basic skeleton for you to start off with."
+                puts "Congrats on completing THE TUTORIAL!!!".green 
                 sleep(1)
+                puts "Press enter to return to the Main Menu"
+                gets 
                 @user = User.find(@user.id)
-                return
             end  
         end
 
