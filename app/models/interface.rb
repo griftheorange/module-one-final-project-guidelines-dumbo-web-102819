@@ -710,8 +710,9 @@ def story_menu
         
         puts "Which location details do you want to see?"
             loc_input = gets.chomp
-            @location = loc_input
-            @location.world_id = @world.id
+            
+            @location = Location.find_by(name: loc_input)
+            
         sleep(1)
         location_menu
     ###########add world
