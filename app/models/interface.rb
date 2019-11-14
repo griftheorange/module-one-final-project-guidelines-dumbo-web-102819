@@ -8,7 +8,7 @@ class Interface
 
     def login
         @print_pause = 0.005
-        system "afplay config/music/Tavern.mp3 &"
+        # system "afplay config/music/Tavern.mp3 &"
         system "afplay config/music/Egypt.mp3 &"
         system "clear"
         puts <<-HEREDOC
@@ -702,10 +702,10 @@ def story_menu
                 puts "Enter the name of a world to see details or press 'R' to previous page."
            
                      world_input = gets.chomp
-                     if World.find_by(name: world_input)
-            
-                        @world = World.find_by(name: world_input)
+                     case world_input
+                     when @world = World.find_by(name: world_input)
                         while (!@world)
+                            puts ""
                             puts "Oops! Invalid choice. Please enter again!"
                             input = gets.chomp
                             @world = World.find_by(name: world_input)
@@ -724,10 +724,11 @@ def story_menu
                     location_menu
                     # elsif world_input = 'R'
                     #      story_menu
-                    else 
-                         puts "Oops! Invalid choice. Please enter again!"
-                         input = gets.chomp
-                    end ####if else
+                    when 'R'
+                        puts ""
+                        story_menu
+                        
+                    end 
                 end ##while rb 695
                     
             
@@ -740,7 +741,7 @@ def story_menu
                 world_input = gets.chomp
                 world = World.find_or_create_by(name: world_input, story_id: @story.id)
                 @story = Story.find(@story.id)
-                puts"Now you have #{world.name} in this world!"
+                puts"Now you have #{world.name} in this story!"
                 sleep(1)
                 story_menu
     #################### delete world
