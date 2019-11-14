@@ -789,18 +789,19 @@ def story_menu
                 story_menu
     #################### delete world
             when '3'
-               puts "Which world do you want to delete?"
-               puts @story.worlds.map{|world| world.name}
-               world_delete_input = gets.chomp
-               if World.where("name = ?", world_delete_input).empty?
-                   puts "Invalid entry! Please choose another one!"
-               else 
-               w = World.find_by(name: world_delete_input, story_id: @story.id)
-               w.destroy
-               puts "Now #{world_delete_input} is destroyed!"
-               sleep(1)
-               story_menu
-               end 
+                puts "Which world do you want to delete?"
+                    puts @story.worlds.map{|world| world.name}
+                    world_delete_input = gets.chomp
+                    
+                    if World.where("name = ?", world_delete_input).empty?
+                        puts "Invalid entry! Please choose another one!"
+                    else 
+                    w = World.find_by(name: world_delete_input, story_id: @story.id)
+                    w.destroy
+                    puts "Now #{world_delete_input} is destroyed!"
+                    sleep(1)
+                    story_menu
+                    end 
     
 #################return to main menu
             when '4'
