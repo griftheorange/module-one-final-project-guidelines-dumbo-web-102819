@@ -257,7 +257,9 @@ def  tutorial
         puts "\nHere comes the fun part... LETS ADD THE MONSTERS!!!"
         puts "In this app, once you're done creating the details of your vision you can fill any location with \n as many monsters from off of the FULL DnD catalog"
         puts "And trust me I mean FULL!! We filled this puppy with the entire 1000+ monster log with \n every type, details, challenge rating, and more, at your disposal"
+        gets
         puts "\n\n Heres a quick list of 5 random mosters within the catalog. Remember, in the app you can choose \n any monster you want but for now let's just pick one to get going "
+        gets
         puts ''
         random_mons_print(5)
         
@@ -280,6 +282,7 @@ def  tutorial
                 puts "Press enter to return to the Main Menu"
                 gets 
                 @user = User.find(@user.id)
+                return
             end  
         end
 
@@ -867,13 +870,13 @@ def story_menu
                                 input = gets.chomp
                                 @world = World.find_by(name: world_input)
                             end ###while loop
+    ###############################location choices###################################
+                            
+                            while true
                             puts ""
                             puts "Locations in #{@world.name}:"
                             puts @world.locations.map{|location| location.name} 
                             puts ""
-    ###############################location choices###################################
-                            
-                            while true
                                 puts <<-HEREDOC
                              What do you want to do next?
                               1. Access locations
