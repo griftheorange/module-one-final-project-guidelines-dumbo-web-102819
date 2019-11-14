@@ -765,22 +765,65 @@ def story_menu
                             puts "Locations in #{@world.name}:"
                             puts @world.locations.map{|location| location.name} 
                             puts ""
-    
-                            puts "Which location details do you want to see?"
+    ###############################location choices###################################
+                            
+                            while true
+                                puts <<-HEREDOC
+                             What do you want to do next?
+                              1. Detail of location
+                              2. Add a location
+                              3. Delete a location
+                              4. Return
+                            HEREDOC
+                            input = gets.chomp
+                            case input
+                            when '1'
+                               puts "Which location do you want to enter?"
+                               puts @world.locations.map{|location| location.name} 
+
                             loc_input = gets.chomp
-    
                             @location = Location.find_by(name: loc_input)
                     
-                        sleep(1)
-                        location_menu
-                        # elsif world_input = 'R'
-                        #      story_menu
+                            sleep(1)
+                            location_menu
+                            when '2'
+                            puts "Which location do you want to add?"
+                                location_input = gets.chomp
+                                location = Location.find_or_create_by(name: location_input, world_id: @world.id)
+                                @world = world.find(@world.id)
+                                puts"Now you have #{location.name} in this world!"
+                                sleep(1)
+                            when '3'
+                                puts "Which location do you want to delete?"
+                                    puts @world.locations.map{|location| location.name} 
+                                    location_delete_input = gets.chomp
+                                    
+                                    if Location.where("name = ?", location_delete_input).empty?
+                                        puts "Invalid entry! Please choose another one!"
+                                    else 
+                                    l = Location.find_by(name: location_delete_input, world_id: @world.id)
+                                    l.destroy
+                                    puts "Now #{location_delete_input} is destroyed!"
+                                    @world = World.find(@world.id)
+                                    sleep(1)
+                                    
+                                    end 
+                            when '4'
+                                story_menu
+                            else 
+                                puts "Oops! Invalid choice! Please enter again!"
+                            end 
+                            end 
+
+    ###############################location choices###################################
+
                         elsif world_input == 'R'
                             puts ""
                             story_menu
                         else 
                             puts "Oops! Invalid choice. Please enter again!"
-                            sleep(3)
+                            puts ""
+                            sleep(1)
                         end 
                 end
                       
