@@ -436,15 +436,13 @@ end
     #have @user, @story, @location, Locations main menu for interaction
     def location_menu
         @print_pause = 0.005
-        world = @location.world
-        location = @location
-        story = @story
+        @world = @location.world
         system 'clear'
         while true
             puts ''
-            puts "Story: #{story.story_name}"
-            puts "World: #{world.name}"
-            puts "Location: #{location.name}"
+            puts "Story: #{@story.story_name}"
+            puts "World: #{@world.name}"
+            puts "Location: #{@location.name}"
             @monster_menu_doc =  <<-HEREDOC
             
     What would you like to do?
@@ -461,7 +459,8 @@ end
         11. Select random monster from this location
         12. Roll Dice d20
         13. Back to story
-        14. Main Menu
+        14. Change Location's Name
+        15. Main Menu
         HEREDOC
 
             puts @monster_menu_doc
@@ -661,12 +660,29 @@ end
             when '13' || '13.'
                 @location = nil
                 story_menu
+
             when '14' || '14.'
+                name = @location.name
+                puts ''
+                puts 'What you you like to change ' + "#{name}'s".green + " name to? (type 'wait stop' to return to menu)" 
+                puts ""
+                input = gets.chomp
+                if input == 'wait stop'
+                    next
+                else
+                    @location.update(name: input)
+                    @location = Location.find(@location.id)
+                    puts ""
+                    puts "#{name}'s".green + " name has been changed to " + "#{@location.name}".green + '!'
+                end
+
+            when '15' || '15.'
                 @story = nil
                 @world = nil
                 @location = nil
                 main_menu
             end
+            
         end
     end
 
