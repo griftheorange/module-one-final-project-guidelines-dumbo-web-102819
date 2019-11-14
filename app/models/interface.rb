@@ -119,13 +119,7 @@ end
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Menu OPTION 1 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# u1 = User.create(username: 'Khobol')
-       
-# s1 = Story.create(story_name: 'The Great Debacle', user_id: u1.id)
-        
-# w1 = World.create(name: "Azeroth", story_id: s1.id)
-        
-# l1 = Location.create(name: 'Orgrimmar', world_id: w1.id)
+
         
 def prev_story_screen
     system "clear"
@@ -233,39 +227,77 @@ def  tutorial
 
     system "clear"
         count = 1
-
-        puts "~~~ Welcome to the Tutorial for MyFirstDnD!!! ~~~" 
+  
+        puts "~~~~~ Welcome to the Tutorial for MyFirstDnD!!! ~~~~~" 
         puts "\t\tYour New World Awaits" 
-        puts "\n\n In this app you are the all powerful Dungeon Master "
+        puts "\n\nIn this app you are the all powerful Dungeon Master!"
         puts "That means you have the ability to create a story as far as your vision will take you."
-        puts "Your story, like any great tale, begins in your own world. And because you are the Dungeon MAster or DM,"
-        puts "It is up to you to create, destroy or change as many locations and monsters in your world as you desire"
-        puts "The possibilities are nearly endless so please weild this great power with great care."
-        puts "The last guy who played thought he could run for president... and won"
-        puts "\n\nSo let's get started!!!"
-        print  'Step 1.) What is the name of your new story? ==> '
-        input = gets.chomp
-        s = Story.find_or_create_by(story_name: input, user_id: @user.id)
-        @user = User.find(@user.id)
-        puts ''
-        puts "You have created the story #{s.story_name}"
-        sleep(1)
-        my_stories = @user.stories.each do |story| 
-            puts "{#{count}} #{story.story_name}"
-            count += 1
-        end
-        puts "{#{count}} Return to Main Menu" 
+        puts "Your story, like any great tale, begins in your own world. And because you are the "
+        puts "Dungeon Master or DM. It is up to you to create, destroy, or change as many locations and "
+        puts "The possibilities are nearly endless so please don't let all this new power get to your head."
+        puts "monsters in your world as you desire. The last guy who played thought he could run for president... and won"
+        puts "\n\n\n~~~~~~ So let's get started!!! ~~~~~~~"
 
-        while true
-            print "\n\n Which story will you nuke today? ==>  "
-            input1 = gets.chomp.to_i
-            main_menu if input1 == count 
-            puts "You have destroyed #{@user.stories[input1-1].story_name}"
-            @user.stories[input1-1].destroy
-            @user = User.find(@user.id)
-            sleep(1)
-            break
-        end
+        print  "\nStep 1.) What is the name of your new story? ==> "
+            input1 = gets.chomp
+            t_story = Story.find_or_create_by(story_name: input1, user_id: @user.id)
+        sleep(1)
+
+         print  "\nStep 2.) Great! Now what's the name of the world your story takes place in? ==> "
+            input2 = gets.chomp
+            t_world = World.create(name: input2, story_id: t_story.id)
+        sleep(1)
+
+         print  "\nStep 3.) Nice! Remember, you can have as many locations in your world as you want. What's the name of your first one => "
+            input3 = gets.chomp
+            t_location = Location.create(name: input3, world_id: t_world.id)
+        sleep(1)
+
+        system "clear"
+        puts "\nALRIGHT! YOU JUST CREATED THE STORY #{input1} \n IN THE WORLD OF #{input2} \n WITH THE FIRST LOCATION OF #{input3}"
+        puts "\nHere comes the fun part... LETS ADD THE MONSTERS!!!"
+        puts "In this app, once you're done creating the details of your vision you can fill any location with \n as many monsters from off of the FULL DnD catalog"
+        puts "And trust me I mean FULL!! We filled this puppy with the entire 1000+ monster log with \n every type, details, challenge rating, and more, at your disposal"
+        puts "\n\n Heres a quick list of 5 random mosters within the catalog. Remmeber, in the app you can choose \n any monster you want but for now let's just pick one to get going "
+        
+        
+        # What would you like to do?
+        # 1. See monster catalogue
+        # 2. See all monster types
+        # 3. Find monsters by type
+        # 4. Find monsters by challenge rating
+        # 5. Search monsters
+        # 6. Get monster's details
+        # 7. List monsters at this location
+        # 8. List locations a monster shows up in in your story
+        # 9. Add a monster to this location
+        # 10. Remove a monster from this location
+        # 11. Select random monster from this location
+        # 12. Roll Dice d20
+        # 13. Back to story
+        # HEREDOC
+
+        # print ""
+        # @user = User.find(@user.id)  
+        # puts ''
+        # puts "You have created the story #{s.story_name}"
+        # sleep(1)
+        # my_stories = @user.stories.each do |story| 
+        #     puts "{#{count}} #{story.story_name}"
+        #     count += 1
+        # end
+        # puts "{#{count}} Return to Main Menu" 
+
+        # while true
+        #     print "\n\n Which story will you nuke today? ==>  "
+        #     input1 = gets.chomp.to_i
+        #     main_menu if input1 == count 
+        #     puts "You have destroyed #{@user.stories[input1-1].story_name}"
+        #     @user.stories[input1-1].destroy
+        #     @user = User.find(@user.id)
+        #     sleep(1)
+        #     break
+        # end
 
 end 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
