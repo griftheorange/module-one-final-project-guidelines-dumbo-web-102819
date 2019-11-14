@@ -447,7 +447,7 @@ end
         2. See all monster types
         3. Find monsters by type
         4. Find monsters by challenge rating
-        5. Search monsters
+        5. Search monsters by name
         6. Get monster's details
         7. List monsters at this location
         8. List locations a monster shows up in in your story
