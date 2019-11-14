@@ -742,41 +742,46 @@ def story_menu
             input = gets.chomp
             case input
             when '1'
-                while true
-                puts "List of the Worlds in #{@story.story_name}" 
-                puts @story.worlds.map{|world| world.name}
-                puts ""
-                puts "Enter the name of a world to see details or press 'R' to previous page."
-           
-                     world_input = gets.chomp
-                     case world_input
-                     when @world = World.find_by(name: world_input)
-                        while (!@world)
-                            puts ""
-                            puts "Oops! Invalid choice. Please enter again!"
-                            input = gets.chomp
-                            @world = World.find_by(name: world_input)
-                        end ###while loop
-                        puts ""
-                        puts "Locations in #{@world.name}:"
-                        puts @world.locations.map{|location| location.name} 
-                        puts ""
-
-                        puts "Which location details do you want to see?"
-                        loc_input = gets.chomp
-
-                        @location = Location.find_by(name: loc_input)
                 
-                    sleep(1)
-                    location_menu
-                    # elsif world_input = 'R'
-                    #      story_menu
-                    when 'R'
-                        puts ""
-                        story_menu
+                while true
+                    puts "List of the Worlds in #{@story.story_name}" 
+                    puts @story.worlds.map{|world| world.name}
+                    puts ""
+                    puts "Enter the name of a world to see details or press 'R' to previous page."
+               
+                         world_input = gets.chomp
                         
-                    end 
-                end ##while rb 695         
+                         if @story.worlds.map{|world| world.name}.include?(world_input)
+                            @world = World.find_by(name: world_input)
+                            while (!@world)
+                                puts ""
+                                puts "Oops! Invalid choice. Please enter again!"
+                                input = gets.chomp
+                                @world = World.find_by(name: world_input)
+                            end ###while loop
+                            puts ""
+                            puts "Locations in #{@world.name}:"
+                            puts @world.locations.map{|location| location.name} 
+                            puts ""
+    
+                            puts "Which location details do you want to see?"
+                            loc_input = gets.chomp
+    
+                            @location = Location.find_by(name: loc_input)
+                    
+                        sleep(1)
+                        location_menu
+                        # elsif world_input = 'R'
+                        #      story_menu
+                        elsif world_input == 'R'
+                            puts ""
+                            story_menu
+                        else 
+                            puts "Oops! Invalid choice. Please enter again!"
+                            sleep(3)
+                        end 
+                end
+                      
             
     ###########add world
             when '2'
@@ -799,6 +804,7 @@ def story_menu
                     w = World.find_by(name: world_delete_input, story_id: @story.id)
                     w.destroy
                     puts "Now #{world_delete_input} is destroyed!"
+                    @story = Story.find(@story.id)
                     sleep(1)
                     story_menu
                     end 
@@ -812,7 +818,6 @@ def story_menu
                 puts "OOPS! Invalid input! Please enter from 1 ~ 4!"
             
                 sleep(1)
-                story_menu
             end  ###case input first line                                                                                           
                                                                                                    
     end #while true                                                                       
