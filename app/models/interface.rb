@@ -8,6 +8,8 @@ class Interface
 
     def login
         @print_pause = 0.005
+        system "afplay config/music/Tavern.mp3 &"
+        system "afplay config/music/Egypt.mp3 &"
         system "clear"
         puts <<-HEREDOC
         11111111111111111111111111111111111111001111111111111111111111111
@@ -65,6 +67,7 @@ class Interface
 
         # puts "TESTING Inputs #{input}"
         if input.upcase == 'Q'
+            system 'killall afplay'
             abort
         end
 
