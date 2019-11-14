@@ -335,7 +335,7 @@ end
             puts ''
             puts "World: #{world.name}"
             puts "Location: #{location.name}"
-            puts <<-HEREDOC
+            @monster_menu_doc =  <<-HEREDOC
             
     What would you like to do?
         1. See monster catalogue
@@ -353,7 +353,7 @@ end
         13. Back to story
         HEREDOC
 
-
+            puts @monster_menu_doc
             input = gets.chomp
             sleep(1)
             case input
