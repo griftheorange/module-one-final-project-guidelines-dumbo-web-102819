@@ -236,7 +236,7 @@ def  tutorial
   
         puts "~~~ Welcome to the Tutorial for MyFirstDnD!!! ~~~" 
         puts "\t\tYour New World Awaits" 
-        puts "\n\n In this app you are the all powerful Dungeon Master "
+        puts "\n\nIn this app you are the all powerful Dungeon Master "
         puts "That means you have the ability to create a story as far as your vision will take you."
         puts "Your story, like any great tale, begins in your own world. And because you are the Dungeon MAster or DM,"
         puts "It is up to you to create, destroy or change as many locations and monsters in your world as you desire"
@@ -253,33 +253,33 @@ def  tutorial
             input2 = gets.chomp
             t_world = World.create(name: input2, story_id: t_story.id)
         sleep(1)
-Location.create(name: 'Orgrimmar', world_id: w1.id)
-         print  "\nStep 3.) Nice! Let's adda location now. ==> "
+
+         print  "\nStep 3.) Nice! Remember, you can have as many locations in your world as you want. What's the name of your first one => "
             input1 = gets.chomp
-            t_story = Story.find_or_create_by(story_name: input1, user_id: @user.id)
+            # t_story = Story.find_or_create_by(story_name: input1, user_id: @user.id)
         sleep(1)
 
-        print ""
-        @user = User.find(@user.id)  
-        puts ''
-        puts "You have created the story #{s.story_name}"
-        sleep(1)
-        my_stories = @user.stories.each do |story| 
-            puts "{#{count}} #{story.story_name}"
-            count += 1
-        end
-        puts "{#{count}} Return to Main Menu" 
+        # print ""
+        # @user = User.find(@user.id)  
+        # puts ''
+        # puts "You have created the story #{s.story_name}"
+        # sleep(1)
+        # my_stories = @user.stories.each do |story| 
+        #     puts "{#{count}} #{story.story_name}"
+        #     count += 1
+        # end
+        # puts "{#{count}} Return to Main Menu" 
 
-        while true
-            print "\n\n Which story will you nuke today? ==>  "
-            input1 = gets.chomp.to_i
-            main_menu if input1 == count 
-            puts "You have destroyed #{@user.stories[input1-1].story_name}"
-            @user.stories[input1-1].destroy
-            @user = User.find(@user.id)
-            sleep(1)
-            break
-        end
+        # while true
+        #     print "\n\n Which story will you nuke today? ==>  "
+        #     input1 = gets.chomp.to_i
+        #     main_menu if input1 == count 
+        #     puts "You have destroyed #{@user.stories[input1-1].story_name}"
+        #     @user.stories[input1-1].destroy
+        #     @user = User.find(@user.id)
+        #     sleep(1)
+        #     break
+        # end
 
 end 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
