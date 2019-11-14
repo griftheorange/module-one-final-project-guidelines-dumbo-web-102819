@@ -231,20 +231,34 @@ def  tutorial
 
     system "clear"
         count = 1
-
+  
         puts "~~~ Welcome to the Tutorial for MyFirstDnD!!! ~~~" 
         puts "\t\tYour New World Awaits" 
         puts "\n\n In this app you are the all powerful Dungeon Master "
         puts "That means you have the ability to create a story as far as your vision will take you."
         puts "Your story, like any great tale, begins in your own world. And because you are the Dungeon MAster or DM,"
         puts "It is up to you to create, destroy or change as many locations and monsters in your world as you desire"
-        puts "The possibilities are nearly endless so please weild this great power with great care."
+        puts "The possibilities are nearly endless so please dont let all this new power get to your head."
         puts "The last guy who played thought he could run for president... and won"
-        puts "\n\nSo let's get started!!!"
-        print  'Step 1.) What is the name of your new story? ==> '
-        input = gets.chomp
-        s = Story.find_or_create_by(story_name: input, user_id: @user.id)
-        @user = User.find(@user.id)
+        puts "\n\n\n~~~~~~ So let's get started!!! ~~~~~~~"
+
+        print  "\nStep 1.) What is the name of your new story? ==> "
+            input1 = gets.chomp
+            t_story = Story.find_or_create_by(story_name: input1, user_id: @user.id)
+        sleep(1)
+
+         print  "\nStep 2.) Great! Now what's the name of the world your story takes place in? ==> "
+            input2 = gets.chomp
+            t_world = World.create(name: input2, story_id: t_story.id)
+        sleep(1)
+Location.create(name: 'Orgrimmar', world_id: w1.id)
+         print  "\nStep 3.) Nice! Let's adda location now. ==> "
+            input1 = gets.chomp
+            t_story = Story.find_or_create_by(story_name: input1, user_id: @user.id)
+        sleep(1)
+
+        print ""
+        @user = User.find(@user.id)  
         puts ''
         puts "You have created the story #{s.story_name}"
         sleep(1)
