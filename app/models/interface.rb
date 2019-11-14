@@ -8,8 +8,7 @@ class Interface
 
     def login
         @print_pause = 0.005
-        # system "afplay config/music/Tavern.mp3 &"
-        system "afplay config/music/Egypt.mp3 &"
+        music_menu
         system "clear"
         puts <<-HEREDOC
         11111111111111111111111111111111111111001111111111111111111111111
@@ -317,6 +316,44 @@ end
 #Location Menu BELOW 
 ##############################################################################################################
 ##############################################################################################################
+    def music_menu
+        system 'clear'
+        puts "Please select your music."
+        puts <<-HEREDOC
+        1. Tavern
+        2. Good Song 1
+        3. Good Song 2, Electric Boogaloo
+        4. Stop music
+        5. Last Menu
+        HEREDOC
+        puts ''
+        while true
+            input = gets.chomp
+            if !(input.to_i >= 1 || input.to_i <= 5)
+                puts ''
+                puts "That is not a valid input."
+                puts ''
+                sleep(1)
+            else
+                case input
+                when '1' || '1.'
+                    system 'killall afplay'
+                    system "afplay config/music/Tavern.mp3 &"
+                when '2' || '2.'
+                    system 'killall afplay'
+                    system "afplay config/music/Egypt.mp3 &"
+                when '3' || '3.'
+                    system 'killall afplay'
+                    system "afplay config/music/SeaShanty.mp3 &"
+                when '4' || '4.'
+                    system 'killall afplay'
+                when '5' || '5.'
+                    return
+                end
+            end
+        end
+    end
+
 
     def loc_men_test
         @user = User.first
