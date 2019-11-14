@@ -61,7 +61,7 @@ class Interface
         HEREDOC
 
         while true
-            puts "Welcome to My First D&D!"
+            puts "Welcome to DM Log 1.01.00!"
             puts "Please give us your username! (Q to quit)"
             input = gets.chomp
     
@@ -259,10 +259,11 @@ def  tutorial
         puts "In this app, once you're done creating the details of your vision you can fill any location with as many monsters from off of the FULL DnD catalog"
 
         puts "And trust me I mean FULL!! We filled this puppy with the entire 1000+ monster log with  every type, details, challenge rating, and more, at your disposal"
-        puts ""
+        puts "\nPress Enter..\n"
         gets
         puts "\nHere's a quick list of 5 random mosters within the catalog. "
         puts "Remember, in the app you can choose any monster you want but for now let's just pick one to get going\n\n"
+        puts "\nPress Enter..\n"
         gets
 
         random_mons_print(5)
