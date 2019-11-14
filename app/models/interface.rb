@@ -695,9 +695,10 @@ def story_menu
                 puts "List of the Worlds in #{@story.story_name}" 
                 puts @story.worlds.map{|world| world.name}
                 puts ""
-            puts "Enter the name of a world to see details or press 'return' to previous page."
+                puts "Enter the name of a world to see details or press 'R' to previous page."
+           
             input = gets.chomp
-            
+          
             @world = World.find_by(name: input)
             while (!@world)
                 puts "Oops! Invalid choice. Please enter again!"
@@ -716,6 +717,8 @@ def story_menu
                 
             sleep(1)
             location_menu
+            
+            
     ###########add world
             when '2'
                 puts "Which world do you want to add?"
