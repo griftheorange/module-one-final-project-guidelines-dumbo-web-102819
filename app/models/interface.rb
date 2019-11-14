@@ -8,7 +8,7 @@ class Interface
 
     def login
         @print_pause = 0.005
-        system "afplay config/music/Tavern.mp3 &"
+        # system "afplay config/music/Tavern.mp3 &"
         system "afplay config/music/Egypt.mp3 &"
         system "clear"
         puts <<-HEREDOC
