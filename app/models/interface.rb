@@ -776,11 +776,7 @@ def story_menu
                         story_menu
                         
                     end 
-                end ##while rb 695
-                    
-            
-           
-            
+                end ##while rb 695         
             
     ###########add world
             when '2'
@@ -794,6 +790,7 @@ def story_menu
     #################### delete world
             when '3'
                puts "Which world do you want to delete?"
+               puts @story.worlds.map{|world| world.name}
                world_delete_input = gets.chomp
                if World.where("name = ?", world_delete_input).empty?
                    puts "Invalid entry! Please choose another one!"
