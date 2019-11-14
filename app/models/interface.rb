@@ -461,6 +461,7 @@ end
         11. Select random monster from this location
         12. Roll Dice d20
         13. Back to story
+        14. Main Menu
         HEREDOC
 
             puts @monster_menu_doc
@@ -643,6 +644,7 @@ end
                     end
                 end
 
+
             #rolls dice
             when '12' || '12.'
                 roll = (1..20).to_a.sample.to_s
@@ -659,6 +661,11 @@ end
             when '13' || '13.'
                 @location = nil
                 story_menu
+            when '14' || '14.'
+                @story = nil
+                @world = nil
+                @location = nil
+                main_menu
             end
         end
     end
