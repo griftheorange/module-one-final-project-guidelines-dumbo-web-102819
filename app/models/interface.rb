@@ -258,7 +258,13 @@ def  tutorial
         puts "In this app, once you're done creating the details of your vision you can fill any location with \n as many monsters from off of the FULL DnD catalog"
         puts "And trust me I mean FULL!! We filled this puppy with the entire 1000+ monster log with \n every type, details, challenge rating, and more, at your disposal"
         puts "\n\n Heres a quick list of 5 random mosters within the catalog. Remmeber, in the app you can choose \n any monster you want but for now let's just pick one to get going "
-        
+        puts ''
+        random_mons_print(5)
+        puts ''
+
+        gets.chomp
+
+
         
         # What would you like to do?
         # 1. See monster catalogue
@@ -348,6 +354,17 @@ end
 #Location Menu BELOW 
 ##############################################################################################################
 ##############################################################################################################
+    
+    def random_mons_print(num)
+        mons = Monster.all.sample(num)
+        string_array = []
+        mons.each{|monster|
+            string_array << 'Name: '.green + "#{monster.name.capitalize} " + "Type: ".green + "#{monster.monster_type.capitalize} " + "Challenge Rating: ".green + "#{monster.challenge_rating} " + "Alignment: ".green + "#{monster.alignment.capitalize}"
+        }
+        puts_with_delay(string_array, 0.3)
+    end
+
+
     def music_menu
         system 'clear'
         puts "Please select your music."
