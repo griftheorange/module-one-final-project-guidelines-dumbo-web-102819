@@ -835,7 +835,7 @@ def story_menu
                     puts "List of the Worlds in #{@story.story_name}" 
                     puts @story.worlds.map{|world| world.name}
                     puts ""
-                    puts "Enter the name of a world to see details or press 'R' to previous page.".blue
+                    puts "Enter the name of a world to see details or press 'R' to previous page.".yellow
                
                          world_input = gets.chomp
                         
@@ -864,8 +864,9 @@ def story_menu
                             HEREDOC
                             input = gets.chomp
                             case input
+                            
                             when '1'
-                               puts "Which location do you want to enter?".blue
+                               puts "Which location do you want to enter? (To return, press R)".yellow
                                puts @world.locations.map{|location| location.name} 
 
                             loc_input = gets.chomp
@@ -874,21 +875,23 @@ def story_menu
                                 @location = Location.find_by(name: loc_input)
                                 sleep(1)
                                 location_menu
+                            elsif loc_input = 'R'
+                                  puts ""
                             else
                                 puts "Oops! Invalid option! Please enter again!".red
                                 puts ""
                             end 
-
+                           
 
                             when '2'
-                            puts "Which location do you want to add?".blue
+                            puts "Which location do you want to add?".yellow
                                 location_input = gets.chomp
                                 location = Location.find_or_create_by(name: location_input, world_id: @world.id)
                                 @world = World.find(@world.id)
                                 puts"Now you have #{location.name} in this world!".green
                                 sleep(1)
                             when '3'
-                                puts "Which location do you want to delete?".blue
+                                puts "Which location do you want to delete?".yellow
                                     puts @world.locations.map{|location| location.name} 
                                     location_delete_input = gets.chomp
                                     
@@ -908,6 +911,7 @@ def story_menu
                             else 
                                 puts "Oops! Invalid choice! Please enter again!".red
                                 puts ""
+                                sleep(1)
                             end 
                             end 
 
@@ -916,6 +920,7 @@ def story_menu
                         elsif world_input == 'R'
                             puts ""
                             story_menu
+                            
                         else 
                             puts "Oops! Invalid choice. Please enter again!".red
                             puts ""
@@ -926,7 +931,7 @@ def story_menu
             
     ###########add world
             when '2'
-                puts "Which world do you want to add?".blue
+                puts "Which world do you want to add?".yellow
                 world_input = gets.chomp
                 world = World.find_or_create_by(name: world_input, story_id: @story.id)
                 @story = Story.find(@story.id)
@@ -935,7 +940,7 @@ def story_menu
                 story_menu
     #################### delete world
             when '3'
-                puts "Which world do you want to delete?".blue
+                puts "Which world do you want to delete?".yellow
                     puts @story.worlds.map{|world| world.name}
                     world_delete_input = gets.chomp
                     
