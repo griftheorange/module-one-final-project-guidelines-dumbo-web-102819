@@ -330,9 +330,11 @@ end
         @print_pause = 0.005
         world = @location.world
         location = @location
+        story = @story
         system 'clear'
         while true
             puts ''
+            puts "Story: #{story.story_name}"
             puts "World: #{world.name}"
             puts "Location: #{location.name}"
             @monster_menu_doc =  <<-HEREDOC
