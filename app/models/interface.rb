@@ -240,30 +240,32 @@ def  tutorial
         print  "\nStep 1.) What is the name of your new story? ==> "
             input1 = gets.chomp
             t_story = Story.find_or_create_by(story_name: input1, user_id: @user.id)
-        sleep(1)
+        sleep(0.5)
 
          print  "\nStep 2.) Great! Now what's the name of the world your story takes place in? ==> "
             input2 = gets.chomp
-            t_world = World.create(name: input2, story_id: t_story.id)
-        sleep(1)
+            t_world = World.find_or_create_by(name: input2, story_id: t_story.id)
+        sleep(0.5)
 
          print  "\nStep 3.) Nice! Remember, you can have as many locations in your world as you want. What's the name of your first one => "
             input3 = gets.chomp
-            t_location = Location.create(name: input3, world_id: t_world.id)
-        sleep(1)
+            t_location = Location.find_or_create_by(name: input3, world_id: t_world.id)
+        sleep(0.5)
 
         system "clear"
-        puts "\nALRIGHT! YOU JUST CREATED THE STORY " + "#{input1}".green + "\n IN THE WORLD OF " + "#{input2}".green + " \n WITH THE FIRST LOCATION OF " + "#{input3}".green
+        puts "\nALRIGHT! YOU JUST CREATED THE STORY " + "#{input1}".green + "\nIN THE WORLD OF " + "#{input2}".green + " \nWITH THE FIRST LOCATION OF " + "#{input3}".green
         puts "\nHere comes the fun part... LETS ADD THE MONSTERS!!!"
-        puts "In this app, once you're done creating the details of your vision you can fill any location with \n as many monsters from off of the FULL DnD catalog"
-        puts "And trust me I mean FULL!! We filled this puppy with the entire 1000+ monster log with \n every type, details, challenge rating, and more, at your disposal"
-        puts "\n\n Heres a quick list of 5 random mosters within the catalog. Remember, in the app you can choose \n any monster you want but for now let's just pick one to get going "
-        puts ''
+        puts "In this app, once you're done creating the details of your vision you can fill any location with as many monsters from off of the FULL DnD catalog"
+
+        puts "And trust me I mean FULL!! We filled this puppy with the entire 1000+ monster log with  every type, details, challenge rating, and more, at your disposal"
+        puts ""
+        puts "\nHere's a quick list of 5 random mosters within the catalog. "
+        puts "Remember, in the app you can choose any monster you want but for now let's just pick one to get going\n\n"
         random_mons_print(5)
         
         while true
-            puts ''
-            puts 'Please type the name of the monster you want to add ==> '
+            
+            print "\nPlease type the name of the monster you want to add ==> "
             input = gets.chomp.downcase
 
             mons = Monster.where("name LIKE ?", input)[0]
@@ -271,35 +273,18 @@ def  tutorial
                 puts "That is not a valid monster. "
             else  
                 LocationMonster.create(location_id: t_location.id, monster_id: mons.id)
-                puts "You have added " +"#{mons.name}".green + " to #{t_location.name}."
+                puts "\n\nAwesome! You have added " +"#{mons.name}".green + " to #{t_location.name}."
                 sleep(1)
-                puts "Within the app you can  search the full extent of our database including filtering and selecting details of specific monsters !!!"
-                puts ", but for now we have set up a basic skeleton for you to start off with."
-                puts "Congrats on completing THE TUTORIAL!!!".green 
+                puts "\nIn conclusion, within the app you can filter, select, and search the full extent of our monster database and even"
+                puts "display it's details online! For the purposes of this tutorial this is a basic skeleton for you to start off with."
+                puts "\nCongrats on completing THE TUTORIAL!!!".green 
                 sleep(1)
-                puts "Press enter to return to the Main Menu"
+                puts "Press enter to return to the Main Menu..."
                 gets 
                 @user = User.find(@user.id)
             end  
         end
 
-
-        
-        # What would you like to do?
-        # 1. See monster catalogue
-        # 2. See all monster types
-        # 3. Find monsters by type
-        # 4. Find monsters by challenge rating
-        # 5. Search monsters
-        # 6. Get monster's details
-        # 7. List monsters at this location
-        # 8. List locations a monster shows up in in your story
-        # 9. Add a monster to this location
-        # 10. Remove a monster from this location
-        # 11. Select random monster from this location
-        # 12. Roll Dice d20
-        # 13. Back to story
-        # HEREDOC
 
         # print ""
         # @user = User.find(@user.id)  
