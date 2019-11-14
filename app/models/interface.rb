@@ -253,16 +253,33 @@ def  tutorial
         sleep(1)
 
         system "clear"
-        puts "\nALRIGHT! YOU JUST CREATED THE STORY #{input1} \n IN THE WORLD OF #{input2} \n WITH THE FIRST LOCATION OF #{input3}"
+        puts "\nALRIGHT! YOU JUST CREATED THE STORY " + "#{input1}".green + "\n IN THE WORLD OF " + "#{input2}".green + " \n WITH THE FIRST LOCATION OF " + "#{input3}".green
         puts "\nHere comes the fun part... LETS ADD THE MONSTERS!!!"
         puts "In this app, once you're done creating the details of your vision you can fill any location with \n as many monsters from off of the FULL DnD catalog"
         puts "And trust me I mean FULL!! We filled this puppy with the entire 1000+ monster log with \n every type, details, challenge rating, and more, at your disposal"
-        puts "\n\n Heres a quick list of 5 random mosters within the catalog. Remmeber, in the app you can choose \n any monster you want but for now let's just pick one to get going "
+        puts "\n\n Heres a quick list of 5 random mosters within the catalog. Remember, in the app you can choose \n any monster you want but for now let's just pick one to get going "
         puts ''
         random_mons_print(5)
-        puts ''
+        
+        while true
+            puts ''
+            puts 'Please type the name of the monster you want to add ==> '
+            input = gets.chomp.downcase
 
-        gets.chomp
+            mons = Monster.where("name LIKE ?", input)[0]
+            binding.pry
+            if mons == nil 
+                puts "That is not a valid monster. "
+            else  
+                LocationMonster.create(location_id: t_location.id, monster_id: mons.id)
+                puts "You have added " +"#{mons.name}".green + " to #{t_location.name}."
+                sleep(1)
+                puts "You're set to go!!!"
+                sleep(1)
+                @user = User.find(@user.id)
+                return
+            end  
+        end
 
 
         
