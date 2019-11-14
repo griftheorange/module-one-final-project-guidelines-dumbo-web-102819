@@ -324,7 +324,7 @@ end
         2. Good Song 1
         3. Good Song 2, Electric Boogaloo
         4. Stop music
-        5. Last Menu
+        5. Proceed
         HEREDOC
         puts ''
         while true
