@@ -885,6 +885,7 @@ def story_menu
                             case input
                             
                             when '1'
+                            
                                puts "Which location do you want to enter? (To return, press R)".yellow
                                puts @world.locations.map{|location| location.name} 
 
@@ -894,7 +895,7 @@ def story_menu
                                 @location = Location.find_by(name: loc_input)
                                 sleep(1)
                                 location_menu
-                            elsif loc_input = 'R'
+                            elsif loc_input == 'R'
                                   puts ""
                             else
                                 puts "Oops! Invalid option! Please enter again!".red
@@ -933,6 +934,7 @@ def story_menu
                                 sleep(1)
                             end 
                             end 
+                       
 
     ###############################location choices###################################
 
@@ -985,7 +987,7 @@ def story_menu
                 puts "OOPS! Invalid input! Please enter from 1 ~ 4!".red
                 puts ""  
             
-                sleep(3)
+                sleep(2)
             end  ###case input first line                                                                                           
                                                                                                    
     end #while true                                                                       
