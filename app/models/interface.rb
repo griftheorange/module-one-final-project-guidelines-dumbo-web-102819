@@ -715,7 +715,7 @@ end
                 break
             when '2' || '2.'
                 url = 'https://open5e.com/monsters/'
-                name = mons_hash['name'].gsub(',', '').gsub("'", '').gsub(' ', '-').downcase
+                name = mons_hash['name'].gsub(',', '').gsub("'", '').gsub('(', '').gsub(')', '').gsub(' ', '-').downcase
                 url += name
                 Launchy.open(url)
                 break
