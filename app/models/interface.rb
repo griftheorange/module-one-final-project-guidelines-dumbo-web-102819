@@ -67,6 +67,7 @@ class Interface
 
         while true
             puts "Welcome to DM Log 1.01.00!"
+            puts "By: Griffin Poole, Imade Osifo, Guligena Aierken"
             puts "Please give us your username! (Q to quit)"
             input = gets.chomp
     
