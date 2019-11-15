@@ -92,7 +92,7 @@ class Interface
 
         case input
         when 'Y'
-            @user = User.create(username: name)
+            @user = User.find_or_create_by(username: name)
             main_menu
         when 'N'
             return
@@ -136,8 +136,13 @@ def prev_story_screen
         end
 
         while true
-            print "\n\nWhich adventure would you like to pick up? ==> "
-            input = gets.chomp.to_i
+            print "\n\nWhich adventure would you like to pick up? (press 'R' to return) ==> "
+            input = gets.chomp
+            if input == 'R' || input == 'r'
+                puts 'test'
+                sleep(1)
+            end
+            input = input.to_i
             if input > count-1 || input < 1
                 puts "That is not a valid input"
                 sleep(1)
@@ -191,7 +196,7 @@ end
             else
                 input1 = input1.to_i
             end
-            main_menu if input1 == count 
+            main_menu if input1 >= count 
             puts "You have destroyed #{@user.stories[input1-1].story_name}"
             @user.stories[input1-1].destroy
             @user = User.find(@user.id)
