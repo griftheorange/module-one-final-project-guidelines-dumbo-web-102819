@@ -8,9 +8,10 @@ class Interface
 
     def login
         @print_pause = 0.005
+        system "afplay config/music/Tavern.mp3 &"
         music_menu
         system "clear"
-        puts <<-HEREDOC
+        pic =  <<-HEREDOC
         11111111111111111111111111111111111111001111111111111111111111111
         11111111111111111111111111111111111100011111111111111111111111111
         11111111111111111111111111111111100001111111111111111111111111111
@@ -59,9 +60,13 @@ class Interface
         11111111111111111111111111111111110111111111111111111111111111111
         11111111111111111110000000000000000000000000000000111111111111111
         HEREDOC
+        pic = pic.gsub('0', '0'.white)
+        pic = pic.gsub('1', '1'.black)
+        img = pic.split("\n")
+        puts_with_delay(img, 0.05)
 
         while true
-            puts "Welcome to My First D&D!"
+            puts "Welcome to DM Log 1.01.00!"
             puts "Please give us your username! (Q to quit)"
             input = gets.chomp
     
@@ -87,7 +92,7 @@ class Interface
 
         case input
         when 'Y'
-            @user = User.create(username: name)
+            @user = User.find_or_create_by(username: name)
             main_menu
         when 'N'
             return
@@ -131,8 +136,13 @@ def prev_story_screen
         end
 
         while true
-            print "\n\nWhich adventure would you like to pick up? ==> "
-            input = gets.chomp.to_i
+            print "\n\nWhich adventure would you like to pick up? (press 'R' to return) ==> "
+            input = gets.chomp
+            if input == 'R' || input == 'r'
+                puts 'test'
+                sleep(1)
+            end
+            input = input.to_i
             if input > count-1 || input < 1
                 puts "That is not a valid input"
                 sleep(1)
@@ -186,7 +196,7 @@ end
             else
                 input1 = input1.to_i
             end
-            main_menu if input1 == count 
+            main_menu if input1 >= count 
             puts "You have destroyed #{@user.stories[input1-1].story_name}"
             @user.stories[input1-1].destroy
             @user = User.find(@user.id)
@@ -259,10 +269,11 @@ def  tutorial
         puts "In this app, once you're done creating the details of your vision you can fill any location with as many monsters from off of the FULL DnD catalog"
 
         puts "And trust me I mean FULL!! We filled this puppy with the entire 1000+ monster log with  every type, details, challenge rating, and more, at your disposal"
-        puts ""
+        puts "\nPress Enter..\n"
         gets
         puts "\nHere's a quick list of 5 random mosters within the catalog. "
         puts "Remember, in the app you can choose any monster you want but for now let's just pick one to get going\n\n"
+        puts "\nPress Enter..\n"
         gets
 
         random_mons_print(5)
@@ -423,7 +434,7 @@ end
     #have @user, @story, @location, Locations main menu for interaction
     def location_menu
         @print_pause = 0.005
-        @world = @location.world
+        @world = World.find(@location.world_id)
         system 'clear'
         while true
             puts ''
@@ -646,6 +657,7 @@ end
             #returns to story menu
             when '13' || '13.'
                 @location = nil
+                @world = nil
                 story_menu
 
             when '14' || '14.'
@@ -872,7 +884,7 @@ def story_menu
                          world_input = gets.chomp
                         
                          if @story.worlds.map{|world| world.name}.include?(world_input)
-                            @world = World.find_by(name: world_input)
+                            @world = @story.worlds.find_by(name: world_input)
                             while (!@world)
                                 puts ""
                                 puts "Oops! Invalid choice. Please enter again!".red
@@ -904,8 +916,8 @@ def story_menu
 
                             loc_input = gets.chomp
                          
-                            if  Location.all.map{|location| location.name}.include?(loc_input)
-                                @location = Location.find_by(name: loc_input)
+                            if  @world.locations.all.map{|location| location.name}.include?(loc_input)
+                                @location = @world.locations.find_by(name: loc_input)
                                 sleep(1)
                                 location_menu
                             elsif loc_input == 'R'
