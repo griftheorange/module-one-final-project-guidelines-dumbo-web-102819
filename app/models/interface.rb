@@ -924,16 +924,16 @@ def story_menu
 
                             loc_input = gets.chomp
                          
-                            if  @world.locations.all.map{|location| location.name}.include?(loc_input)
-                                @location = @world.locations.find_by(name: loc_input)
-                                sleep(1)
-                                location_menu
-                            elsif loc_input == 'R'
-                                  puts ""
-                            else
-                                puts "Oops! Invalid option! Please enter again!".red
-                                puts ""
-                            end 
+                                if  @world.locations.all.map{|location| location.name}.include?(loc_input)
+                                    @location = @world.locations.find_by(name: loc_input)
+                                    sleep(1)
+                                    location_menu
+                                elsif loc_input == 'R'
+                                      puts ""
+                                else
+                                    puts "Oops! Invalid option! Please enter again!".red
+                                    puts ""
+                                end 
                            
 
                             when '2'
