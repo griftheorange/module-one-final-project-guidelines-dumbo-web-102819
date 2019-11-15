@@ -968,6 +968,7 @@ def story_menu
                                     
                                     end 
                             when '4'
+                                @world = nil
                                 story_menu
                             else  
                                 puts "Oops! Invalid choice! Please enter again!".red
