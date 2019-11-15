@@ -703,12 +703,12 @@ end
                 sleep(1)
                 puts ''
                 puts ''
-                important = ['name', 'size', 'challenge_rating', 'type', 'subtype','alignment', 'armor_class', 'hit_points', 'hit_dice', 'speed', 'strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma', 'perception', 'actions']
+                important = ['name', 'size', 'challenge_rating', 'type', 'subtype','alignment', 'armor_class', 'hit_points', 'hit_dice', 'speed', 'strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma', 'perception', 'special_abilities', 'actions', 'legendary_actions']
                 important.each{|topic|
-                        if topic != 'actions'
+                        if !['special_abilities', 'actions', 'legendary_actions'].include?(topic)
                             puts (topic.capitalize + ': ' + mons_hash[topic].to_s)
                         else
-                            put_actions(mons_hash)
+                            put_actions(mons_hash, topic)
                         end
                         sleep(0.1)
                 }
@@ -726,18 +726,22 @@ end
         
     end
 
-    def put_actions(mons_hash)
+    def put_actions(mons_hash, topic)
         puts ''
-        puts "#{mons_hash['name']}'s Actions:".green
+        puts "#{mons_hash['name']}'s #{topic.capitalize}:".green
         puts ''
-        actions = mons_hash['actions']
-        actions.each{|action|
-            puts "Name: #{action['name']}".green
-            puts action['desc']
-            puts ''
-            puts ''
-            sleep(0.1)
-        }
+        actions = mons_hash["#{topic}"]
+        if actions.class != Array
+            return
+        else
+            actions.each{|action|
+                puts "Name: #{action['name']}".green
+                puts action['desc']
+                puts ''
+                puts ''
+                sleep(0.1)
+            }
+        end
     end
 
 
