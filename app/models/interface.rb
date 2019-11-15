@@ -430,7 +430,6 @@ end
     def location_menu
         @print_pause = 0.005
         @world = World.find(@location.world_id)
-        binding.pry
         system 'clear'
         while true
             puts ''
@@ -880,7 +879,7 @@ def story_menu
                          world_input = gets.chomp
                         
                          if @story.worlds.map{|world| world.name}.include?(world_input)
-                            @world = World.find_by(name: world_input)
+                            @world = @story.worlds.find_by(name: world_input)
                             while (!@world)
                                 puts ""
                                 puts "Oops! Invalid choice. Please enter again!".red
@@ -912,7 +911,7 @@ def story_menu
 
                             loc_input = gets.chomp
                          
-                            if  Location.all.map{|location| location.name}.include?(loc_input)
+                            if  @world.locations.all.map{|location| location.name}.include?(loc_input)
                                 @location = @world.locations.find_by(name: loc_input)
                                 sleep(1)
                                 location_menu
