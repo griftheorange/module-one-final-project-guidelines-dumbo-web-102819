@@ -88,13 +88,13 @@ class Interface
 
     def new_user_prompt(name)
         puts "I don't recognize that username. Would you like to make a new user? (Y/N)"
-        input = gets.chomp.upcase!
+        input = gets.chomp.downcase
 
         case input
-        when 'Y'
+        when 'y'
             @user = User.find_or_create_by(username: name)
             main_menu
-        when 'N'
+        when 'n'
             return
         end
     end
