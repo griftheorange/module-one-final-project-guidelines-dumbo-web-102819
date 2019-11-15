@@ -286,7 +286,7 @@ def  tutorial
             if mons == nil 
                 puts "That is not a valid monster. "
             else  
-                LocationMonster.create(location_id: t_location.id, monster_id: mons.id)
+                LocationMonster.find_or_create_by(location_id: t_location.id, monster_id: mons.id)
                 puts "\n\nAwesome! You have added " +"#{mons.name}".green + " to #{t_location.name}."
                 sleep(1)
                 puts "\nIn conclusion, within the app you can filter, select, and search the full extent of our monster database and even"
@@ -666,6 +666,9 @@ end
                 puts ""
                 input = gets.chomp
                 if input == 'wait stop'
+                    next
+                elsif @world.locations.map{|location| location.name}.include?(input)
+                    puts "You can't change the name to a location that already exists in this world. Please try again."
                     next
                 else
                     @location.update(name: input)
