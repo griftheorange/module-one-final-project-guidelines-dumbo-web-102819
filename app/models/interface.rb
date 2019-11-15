@@ -139,8 +139,7 @@ def prev_story_screen
             print "\n\nWhich adventure would you like to pick up? (press 'R' to return) ==> "
             input = gets.chomp
             if input == 'R' || input == 'r'
-                puts 'test'
-                sleep(1)
+                main_menu
             end
             input = input.to_i
             if input > count-1 || input < 1
